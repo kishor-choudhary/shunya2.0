@@ -1,0 +1,768 @@
+<!DOCTYPE html>
+<html lang="en" class="h-full antialiased">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Events // SHUNYA — Sound First, Built Not Booked</title>
+  <meta name="description" content="Large-scale electronic music events, warehouse sessions and open-air stages. Every date is published from the SHUNYA studio — nothing is listed until confirmed." />
+  <link rel="canonical" href="https://www.shunya.example/events" />
+  
+  <!-- Open Graph / Twitter -->
+  <meta property="og:title" content="Events // SHOONYA Event Management" />
+  <meta property="og:description" content="Large-scale electronic music events, warehouse sessions and open-air stages." />
+  <meta property="og:url" content="https://www.shunya.example/events" />
+  <meta property="og:site_name" content="SHOONYA" />
+  <meta property="og:type" content="website" />
+  <meta name="twitter:card" content="summary_large_image" />
+
+  <!-- Google tag (gtag.js) GA4 Placeholder -->
+  <!-- <script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-XXXXXXXXXX');
+  </script> -->
+
+  <!-- Luxury Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Plus+Jakarta+Sans:ital,wght@0,300..800;1,300..800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+  
+  <!-- Base Next.js Production Stylesheet -->
+  <link rel="stylesheet" href="/_next/static/chunks/0_7-834d877pd.css" />
+
+  <style>
+    :root {
+      --font-firs: "Plus Jakarta Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif !important;
+      --font-mono: "JetBrains Mono", "Roboto Mono", ui-monospace, monospace !important;
+      --font-serif: "Instrument Serif", Georgia, serif !important;
+      --shunya-purple: #af00f1;
+      --shunya-magenta: #d900ff;
+      --shunya-bone: #f8f5ee;
+      --shunya-dark: #0b0210;
+      --color-signal: #af00f1;
+      --color-signal-2: #d900ff;
+    }
+    * { box-sizing: border-box; }
+    body {
+      background: #08030d;
+      color: #f8f5ee;
+      font-family: var(--font-firs);
+      margin: 0;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      background-image: 
+        radial-gradient(ellipse at 50% 20%, rgba(175, 0, 241, 0.12) 0%, transparent 60%),
+        linear-gradient(to right, rgba(248, 245, 238, 0.03) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(248, 245, 238, 0.03) 1px, transparent 1px);
+      background-size: 100% 100%, 72px 72px, 72px 72px;
+    }
+    a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible {
+      outline: 2px solid var(--shunya-magenta) !important;
+      outline-offset: 3px !important;
+    }
+    #shunyaScrollProgress {
+      position: fixed; top: 0; left: 0; height: 3px; width: 0%;
+      background: linear-gradient(90deg, var(--shunya-purple), var(--shunya-magenta), #00ffaa);
+      box-shadow: 0 0 12px var(--shunya-magenta); z-index: 999999;
+      pointer-events: none; transition: width 0.08s ease-out;
+    }
+    .shunya-hud-bar {
+      position: fixed; top: 24px; right: 28px; z-index: 50;
+      display: flex; align-items: center; gap: 12px; font-family: var(--font-mono);
+    }
+    .shunya-hud-pill {
+      background: rgba(20, 5, 30, 0.78); border: 1px solid rgba(175, 0, 241, 0.4);
+      color: #f8f5ee; padding: 8px 16px; font-size: 11px; text-transform: uppercase;
+      letter-spacing: 0.15em; border-radius: 9999px; cursor: pointer; backdrop-filter: blur(12px);
+      transition: all 0.25s; display: flex; align-items: center; gap: 8px; text-decoration: none;
+    }
+    .shunya-hud-pill:hover { border-color: var(--shunya-magenta); color: #fff; }
+    .shunya-wa-fab {
+      position: fixed; bottom: 28px; right: 28px; z-index: 60;
+      width: 52px; height: 52px; border-radius: 50%;
+      background: linear-gradient(135deg, #25D366, #128C7E);
+      border: 2px solid rgba(255, 255, 255, 0.3);
+      box-shadow: 0 8px 24px rgba(37, 211, 102, 0.4);
+      display: flex; align-items: center; justify-content: center;
+      transition: all 0.3s; text-decoration: none;
+    }
+    .shunya-wa-fab:hover { transform: scale(1.08); }
+    .shunya-wa-fab svg { width: 26px; height: 26px; fill: #ffffff; }
+
+    /* Page Shell */
+    .shell {
+      width: 100%; max-width: 1320px; margin: 0 auto; padding: 0 24px;
+    }
+    @media (min-width: 768px) { .shell { padding: 0 48px; } }
+
+    /* Filter Bar */
+    .filter-card {
+      background: rgba(18, 5, 28, 0.65);
+      border: 1px solid rgba(175, 0, 241, 0.25);
+      border-radius: 12px;
+      backdrop-filter: blur(14px);
+      padding: 18px 24px;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+    }
+    .filter-btn-group {
+      display: flex; flex-wrap: wrap; gap: 6px;
+    }
+    .filter-btn {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      color: #bfb8c9;
+      padding: 7px 16px;
+      border-radius: 9999px;
+      font-size: 11px;
+      font-family: var(--font-mono);
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .filter-btn:hover { background: rgba(175, 0, 241, 0.2); color: #fff; }
+    .filter-btn.active {
+      background: var(--shunya-purple);
+      border-color: var(--shunya-magenta);
+      color: #fff;
+      box-shadow: 0 0 15px rgba(175, 0, 241, 0.5);
+    }
+    .filter-select {
+      background: #110319;
+      border: 1px solid rgba(175, 0, 241, 0.3);
+      color: #f8f5ee;
+      padding: 8px 14px;
+      border-radius: 8px;
+      font-family: var(--font-mono);
+      font-size: 11px;
+      outline: none;
+      letter-spacing: 0.05em;
+    }
+
+    /* Event Cards */
+    .event-card {
+      background: rgba(16, 5, 24, 0.7);
+      border: 1px solid rgba(175, 0, 241, 0.22);
+      border-radius: 12px;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.3s, box-shadow 0.3s;
+    }
+    .event-card:hover {
+      transform: translateY(-4px);
+      border-color: var(--shunya-magenta);
+      box-shadow: 0 12px 36px rgba(175, 0, 241, 0.3);
+    }
+    .event-poster-wrap {
+      position: relative;
+      width: 100%;
+      height: 240px;
+      overflow: hidden;
+      background: #0f0217;
+    }
+    .event-poster-img {
+      width: 100%; height: 100%; object-fit: cover;
+      transition: transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .event-card:hover .event-poster-img {
+      transform: scale(1.05);
+    }
+    .event-poster-overlay {
+      position: absolute; inset: 0;
+      background: linear-gradient(to top, rgba(8, 3, 13, 0.95) 0%, rgba(8, 3, 13, 0.2) 60%, transparent 100%);
+    }
+    .event-body {
+      padding: 24px;
+      display: flex;
+      flex-direction: column;
+      flex: 1;
+    }
+    .badge {
+      display: inline-block; padding: 4px 10px; border-radius: 4px;
+      font-size: 10px; font-family: var(--font-mono); font-weight: 700;
+      text-transform: uppercase; letter-spacing: 0.1em;
+    }
+    .badge-live { background: rgba(0, 255, 170, 0.15); border: 1px solid #00ffaa; color: #00ffaa; }
+    .badge-sold { background: rgba(255, 68, 68, 0.15); border: 1px solid #ff4444; color: #ff8888; }
+    .badge-secret { background: rgba(175, 0, 241, 0.2); border: 1px solid var(--shunya-magenta); color: #e6a8ff; }
+
+    .btn-primary {
+      background: linear-gradient(135deg, var(--shunya-purple), var(--shunya-magenta));
+      color: #fff; border: none; padding: 10px 20px; border-radius: 6px;
+      font-weight: 600; font-size: 12px; cursor: pointer; text-decoration: none;
+      display: inline-flex; align-items: center; justify-content: center; gap: 6px;
+      transition: all 0.2s; box-shadow: 0 4px 15px rgba(175, 0, 241, 0.35);
+    }
+    .btn-primary:hover { transform: translateY(-1px); box-shadow: 0 6px 22px rgba(217, 0, 255, 0.55); }
+    .btn-ghost {
+      background: rgba(255, 255, 255, 0.06); border: 1px solid rgba(255, 255, 255, 0.15);
+      color: #f8f5ee; padding: 10px 18px; border-radius: 6px; font-size: 12px;
+      cursor: pointer; text-decoration: none; display: inline-flex; align-items: center; gap: 6px;
+      transition: all 0.2s; font-family: var(--font-mono);
+    }
+    .btn-ghost:hover { background: rgba(255, 255, 255, 0.12); border-color: rgba(255, 255, 255, 0.3); }
+
+    /* Modal */
+    .shunya-modal-backdrop {
+      position: fixed; inset: 0; z-index: 99999;
+      background: rgba(0, 0, 0, 0.88); backdrop-filter: blur(14px);
+      display: none; align-items: center; justify-content: center; padding: 20px;
+    }
+    .shunya-modal-card {
+      background: #110319; border: 1px solid rgba(175, 0, 241, 0.4);
+      border-radius: 14px; max-width: 580px; width: 100%; padding: 32px;
+      box-shadow: 0 25px 70px rgba(0, 0, 0, 0.8); position: relative; max-height: 90vh; overflow-y: auto;
+    }
+    .shunya-modal-close {
+      position: absolute; top: 20px; right: 20px; background: transparent;
+      border: none; color: #fff; font-size: 26px; cursor: pointer; line-height: 1;
+    }
+  
+    /* Unified Navigation Header & Full-Width Tabs */
+    .shunya-hud-bar { display: none !important; }
+    .header-inner-row {
+      display: grid;
+      grid-template-columns: 1fr auto 1fr;
+      align-items: center;
+      padding: 18px 24px;
+      width: 100%;
+      box-sizing: border-box;
+    }
+    @media (min-width: 768px) {
+      .header-inner-row { padding: 20px 40px; }
+    }
+    @media (min-width: 1280px) {
+      .header-inner-row { padding: 22px 56px; }
+    }
+    .tab-link {
+      color: var(--shunya-bone, #f8f5ee);
+      text-decoration: none;
+      font-weight: 500;
+      position: relative;
+      transition: color 0.25s ease;
+      white-space: nowrap;
+    }
+    .tab-link:hover {
+      color: var(--shunya-magenta, #d900ff);
+    }
+    .tab-link.active {
+      color: var(--shunya-magenta, #d900ff) !important;
+      font-weight: 700;
+    }
+    .tab-link.active::after {
+      content: "";
+      position: absolute;
+      bottom: -4px;
+      left: 0;
+      right: 0;
+      height: 2px;
+      background: var(--shunya-magenta, #d900ff);
+      box-shadow: 0 0 8px var(--shunya-magenta, #d900ff);
+      border-radius: 1px;
+    }
+    .tab-cta-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 8px 20px;
+      border-radius: 9999px;
+      background: linear-gradient(135deg, var(--shunya-magenta, #d900ff), #7700a6);
+      color: #ffffff !important;
+      font-family: var(--font-mono, monospace);
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.15em;
+      font-weight: 600;
+      border: none;
+      cursor: pointer;
+      text-decoration: none;
+      transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+      box-shadow: 0 4px 16px rgba(175, 0, 241, 0.35);
+      white-space: nowrap;
+    }
+    .tab-cta-btn:hover {
+      transform: translateY(-1px) scale(1.02);
+      box-shadow: 0 6px 24px rgba(217, 0, 255, 0.6);
+      background: linear-gradient(135deg, #f033ff, var(--shunya-magenta, #d900ff));
+    }
+    .shunya-audio-fab {
+      position: fixed;
+      bottom: 28px;
+      left: 28px;
+      z-index: 60;
+      background: rgba(18, 5, 28, 0.82);
+      border: 1px solid rgba(175, 0, 241, 0.4);
+      color: var(--shunya-bone, #f8f5ee);
+      padding: 8px 16px;
+      font-size: 11px;
+      font-family: var(--font-mono, monospace);
+      text-transform: uppercase;
+      letter-spacing: 0.15em;
+      border-radius: 9999px;
+      cursor: pointer;
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.6);
+      text-decoration: none;
+    }
+    .shunya-audio-fab:hover {
+      border-color: var(--shunya-magenta, #d900ff);
+      background: rgba(175, 0, 241, 0.2);
+      color: #fff;
+      transform: translateY(-2px);
+      box-shadow: 0 10px 28px rgba(175, 0, 241, 0.45);
+    }
+
+  </style>
+
+  <script>
+    window.SHUNYA_DATA = null;
+    try {
+      var xhr = new XMLHttpRequest();
+      xhr.open("GET", "/api/site-data", false);
+      xhr.send(null);
+      if (xhr.status === 200) window.SHUNYA_DATA = JSON.parse(xhr.responseText);
+    } catch(e) {}
+
+    function applyShunyaTheme(theme) {
+      var t = theme || (window.SHUNYA_DATA && window.SHUNYA_DATA.theme) || "void";
+      var r = document.documentElement;
+      if (t === "dusk") {
+        r.style.setProperty("--shunya-purple", "#c1272d");
+        r.style.setProperty("--shunya-magenta", "#f0a828");
+      } else if (t === "cyber") {
+        r.style.setProperty("--shunya-purple", "#00ffaa");
+        r.style.setProperty("--shunya-magenta", "#00cc88");
+      } else {
+        r.style.setProperty("--shunya-purple", "#af00f1");
+        r.style.setProperty("--shunya-magenta", "#d900ff");
+      }
+    }
+    applyShunyaTheme();
+  </script>
+</head>
+<body>
+
+  <!-- Top Progress Bar -->
+  <div id="shunyaScrollProgress" aria-hidden="true"></div>
+
+    <!-- Floating Atmospheric Audio Pill (Bottom Left) -->
+  <button id="shunyaSoundToggle" class="shunya-audio-fab" onclick="shunyaToggleAudio()" title="Toggle Atmospheric Audio" aria-label="Toggle Atmospheric Audio">
+    <span id="shunyaSoundDot" style="display:inline-block; width:6px; height:6px; border-radius:50%; background:#888;"></span>
+    <span id="shunyaSoundLabel">Audio: OFF</span>
+  </button>
+
+  <!-- Main Site Header -->
+  <header style="position:sticky; top:0; z-index:40; background:rgba(8, 3, 13, 0.88); backdrop-filter:blur(16px); -webkit-backdrop-filter:blur(16px); border-bottom:1px solid rgba(248, 245, 238, 0.08); width:100%;">
+    <div class="header-inner-row">
+      <a href="/" aria-label="SHOONYA — home" style="color:var(--shunya-bone); display:inline-flex; align-items:center; gap:10px; text-decoration:none; justify-self:start;">
+        <svg viewBox="0 0 64 64" fill="currentColor" style="height:32px; width:auto; overflow:visible;">
+          <circle cx="32" cy="32" r="30" fill="rgba(175, 0, 241, 0.15)" stroke="rgba(175, 0, 241, 0.4)" stroke-width="1.5"></circle>
+          <path d="M44.8 15.4C35.8 6.4 12.9 12.6 17.7 20.6s21.9 11.6 28.6 22.8c4.8 8-18.1 14.2-27.1 5.2" fill="none" stroke="currentColor" stroke-width="6.5" stroke-linecap="round"></path>
+        </svg>
+      </a>
+
+      <a href="/" style="font-family:var(--font-mono); font-size:15px; font-weight:700; text-transform:uppercase; letter-spacing:0.5em; color:var(--shunya-magenta); text-decoration:none; justify-self:center; white-space:nowrap;">
+        SHOONYA
+      </a>
+
+      <nav aria-label="Primary" style="display:none; justify-self:end; align-items:center; gap:28px; font-family:var(--font-mono); font-size:10px; text-transform:uppercase; letter-spacing:0.25em;" class="md-nav">
+        <a href="/events" onclick="window.location.assign('/events'); return false;" class="tab-link active">Events</a>
+        <a href="/private-experiences" onclick="window.location.assign('/private-experiences'); return false;" class="tab-link">Private Experiences</a>
+        <a href="/about" onclick="window.location.assign('/about'); return false;" class="tab-link">About</a>
+        <a href="/gallery" onclick="window.location.assign('/gallery'); return false;" class="tab-link">Gallery</a>
+        <a href="/contact" onclick="window.location.assign('/contact'); return false;" class="tab-link">Contact</a>
+        <button type="button" onclick="openQuickTalk()" class="tab-cta-btn">Let's talk</button>
+      </nav>
+
+      <button type="button" onclick="toggleMobileNav()" aria-label="Toggle navigation" class="md-hidden" style="justify-self:end; background:none; border:none; color:#fff; cursor:pointer; padding:6px;">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 6h16M4 12h16M4 18h16"/></svg>
+      </button>
+    </div>
+  </header>
+
+  <!-- Mobile Drawer -->
+  <div id="mobileDrawer" style="display:none; position:fixed; inset:0; z-index:90; background:#0a0312; flex-direction:column; justify-content:space-between; padding:32px 28px;">
+    <div style="display:flex; justify-content:space-between; align-items:center;">
+      <span style="font-family:var(--font-mono); font-size:14px; letter-spacing:0.3em; color:var(--shunya-magenta);">SHOONYA</span>
+      <button onclick="toggleMobileNav()" style="background:none; border:none; color:#fff; font-size:28px; cursor:pointer;">&times;</button>
+    </div>
+    <nav style="display:flex; flex-direction:column; gap:20px; margin:40px 0;">
+      <a href="/events" onclick="window.location.assign('/events'); return false;" style="font-size:32px; font-weight:700; color:var(--shunya-magenta); text-decoration:none;">Events</a>
+      <a href="/private-experiences" onclick="window.location.assign('/private-experiences'); return false;" style="font-size:32px; font-weight:700; color:#fff; text-decoration:none;">Private Experiences</a>
+      <a href="/about" onclick="window.location.assign('/about'); return false;" style="font-size:32px; font-weight:700; color:#fff; text-decoration:none;">About</a>
+      <a href="/gallery" onclick="window.location.assign('/gallery'); return false;" style="font-size:32px; font-weight:700; color:#fff; text-decoration:none;">Gallery</a>
+      <a href="/contact" onclick="window.location.assign('/contact'); return false;" style="font-size:32px; font-weight:700; color:#fff; text-decoration:none;">Contact</a>
+      <button onclick="toggleMobileNav(); openQuickTalk();" class="btn-primary" style="margin-top:16px; padding:14px; font-size:14px; justify-content:center;">Let's talk</button>
+    </nav>
+    <div style="font-family:var(--font-mono); font-size:11px; color:#8c8599; line-height:1.6;">
+      From Shoonya, Everything Begins<br>
+      Independent Event & Electronic Music Experiences
+    </div>
+  </div>
+
+  <!-- Main Content -->
+  <main style="flex:1; padding-top:48px; padding-bottom:80px;">
+    
+    <!-- Hero Header -->
+    <section class="shell" style="margin-bottom:40px;">
+      <div style="font-family:var(--font-mono); font-size:11px; text-transform:uppercase; letter-spacing:0.3em; color:var(--shunya-magenta); margin-bottom:12px;">
+        03 // EVENTS CALENDAR
+      </div>
+      <h1 style="font-size:clamp(2.2rem, 5vw, 4rem); font-weight:800; line-height:1.1; margin:0 0 16px 0; color:#fff; letter-spacing:-0.02em;">
+        Sound First. <span style="font-style:italic; font-family:var(--font-serif); font-weight:400; color:#ecd2ff;">Built Not Booked.</span>
+      </h1>
+      <p style="max-width:720px; font-size:16px; line-height:1.6; color:#b5adbf; margin:0;">
+        Large-scale electronic music events, warehouse sessions, and open-air stages. Every date is published directly from the SHUNYA studio — nothing is listed until it is fully confirmed.
+      </p>
+    </section>
+
+    <!-- Filters Section -->
+    <section class="shell" style="margin-bottom:36px;">
+      <div class="filter-card">
+        <!-- When Filters -->
+        <div class="filter-btn-group">
+          <button class="filter-btn active" id="btnWhenUpcoming" onclick="setWhenFilter('upcoming')">Upcoming</button>
+          <button class="filter-btn" id="btnWhenPast" onclick="setWhenFilter('past')">Past Sessions</button>
+          <button class="filter-btn" id="btnWhenAll" onclick="setWhenFilter('all')">All</button>
+        </div>
+
+        <!-- Category & City Dropdowns -->
+        <div style="display:flex; gap:10px; flex-wrap:wrap; align-items:center;">
+          <select id="selectCategory" class="filter-select" onchange="applyFilters()">
+            <option value="">All Categories</option>
+            <option value="Warehouse Series">Warehouse Series</option>
+            <option value="Open Air">Open Air</option>
+            <option value="Club Session">Club Session</option>
+            <option value="Private Gathering">Private Gathering</option>
+          </select>
+          <select id="selectCity" class="filter-select" onchange="applyFilters()">
+            <option value="">All Cities</option>
+            <option value="Mumbai">Mumbai</option>
+            <option value="Goa">Goa</option>
+            <option value="Bangalore">Bangalore</option>
+            <option value="Delhi NCR">Delhi NCR</option>
+          </select>
+          <span id="filterCount" style="font-family:var(--font-mono); font-size:11px; color:var(--shunya-magenta); padding-left:8px;">
+            Loading events...
+          </span>
+        </div>
+      </div>
+    </section>
+
+    <!-- Events Grid Section -->
+    <section class="shell">
+      <div id="eventsGrid" style="display:grid; grid-template-columns:repeat(auto-fill, minmax(340px, 1fr)); gap:28px;">
+        <!-- Populated via renderEventsList() -->
+      </div>
+
+      <!-- Friendly Empty State -->
+      <div id="eventsEmptyState" style="display:none; text-align:center; padding:64px 24px; background:rgba(18,5,28,0.5); border:1px dashed rgba(175,0,241,0.3); border-radius:14px; margin-top:20px;">
+        <div style="width:48px; height:48px; border-radius:50%; background:rgba(175,0,241,0.15); display:inline-flex; align-items:center; justify-content:center; margin-bottom:16px;">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="color:var(--shunya-magenta);"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+        </div>
+        <h2 style="font-size:24px; font-weight:700; color:#fff; margin:0 0 8px 0;">New events dropping soon</h2>
+        <p style="color:#b5adbf; font-size:14px; max-width:480px; margin:0 auto 20px auto; line-height:1.5;">
+          No events currently match your selected filter. Join the guestlist notifications or enquire directly about private dates.
+        </p>
+        <div style="display:flex; justify-content:center; gap:12px; flex-wrap:wrap;">
+          <button onclick="setWhenFilter('all')" class="btn-ghost">View All Dates</button>
+          <a href="/private-experiences" class="btn-primary">Commission Private Experience</a>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Quick Talk Modal -->
+  <div id="quickTalkModal" class="shunya-modal-backdrop" onclick="if(event.target===this)closeQuickTalk()">
+    <div class="shunya-modal-card">
+      <button class="shunya-modal-close" onclick="closeQuickTalk()">&times;</button>
+      <div style="font-family:var(--font-mono); font-size:11px; text-transform:uppercase; letter-spacing:0.2em; color:var(--shunya-magenta); margin-bottom:6px;">
+        Fast Track // Direct Line
+      </div>
+      <h3 style="font-size:24px; font-weight:700; color:#fff; margin:0 0 14px 0;">Let's talk.</h3>
+      <p style="color:#b5adbf; font-size:13px; line-height:1.5; margin:0 0 20px 0;">
+        Share your inquiry or booking concept. The SHUNYA studio responds within 24 hours.
+      </p>
+      <form id="quickTalkForm" onsubmit="handleQuickTalkSubmit(event)">
+        <!-- Honeypot -->
+        <input type="text" name="shunya_hp" style="display:none;" tabindex="-1" autocomplete="off" />
+        <div style="margin-bottom:14px;">
+          <label style="display:block; font-size:11px; font-family:var(--font-mono); text-transform:uppercase; color:#bfb8c9; margin-bottom:6px;">Name *</label>
+          <input type="text" id="qtName" required placeholder="Your Name" style="width:100%; background:#09020e; border:1px solid rgba(175,0,241,0.3); color:#fff; padding:10px 14px; border-radius:6px; font-size:13px; outline:none;" />
+        </div>
+        <div style="margin-bottom:14px;">
+          <label style="display:block; font-size:11px; font-family:var(--font-mono); text-transform:uppercase; color:#bfb8c9; margin-bottom:6px;">Contact (Email or Phone) *</label>
+          <input type="text" id="qtContact" required placeholder="+91 XXXXX XXXXX or name@example.com" style="width:100%; background:#09020e; border:1px solid rgba(175,0,241,0.3); color:#fff; padding:10px 14px; border-radius:6px; font-size:13px; outline:none;" />
+        </div>
+        <div style="margin-bottom:18px;">
+          <label style="display:block; font-size:11px; font-family:var(--font-mono); text-transform:uppercase; color:#bfb8c9; margin-bottom:6px;">Message or Concept *</label>
+          <textarea id="qtMessage" rows="3" required placeholder="What are you envisioning?" style="width:100%; background:#09020e; border:1px solid rgba(175,0,241,0.3); color:#fff; padding:10px 14px; border-radius:6px; font-size:13px; outline:none;"></textarea>
+        </div>
+        <div id="qtStatus" style="display:none; padding:10px; border-radius:6px; margin-bottom:14px; font-size:12px;"></div>
+        <button type="submit" id="qtSubmitBtn" class="btn-primary" style="width:100%; padding:12px; font-size:13px; justify-content:center;">Send Enquiry</button>
+        <button type="button" onclick="sendQuickWhatsApp()" class="btn-ghost" style="width:100%; margin-top:10px; justify-content:center; color:#25D366; border-color:rgba(37,211,102,0.4);">
+          Or chat directly on WhatsApp ↗
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Floating WhatsApp FAB -->
+  <a href="https://wa.me/910000000000?text=Hi%20SHUNYA%20%E2%80%94%20I%27d%20like%20to%20know%20more%20about%20your%20events." target="_blank" rel="noopener noreferrer" class="shunya-wa-fab" aria-label="Chat with SHUNYA on WhatsApp">
+    <svg viewBox="0 0 24 24"><path d="M12.031 6.172c-3.181 0-5.767 2.586-5.768 5.766-.001 1.298.38 2.27 1.019 3.287l-.582 2.128 2.182-.573c.978.58 1.911.928 3.145.929 3.178 0 5.767-2.587 5.768-5.766.001-3.187-2.575-5.77-5.764-5.771zm3.392 8.244c-.144.405-.837.774-1.17.824-.312.045-.634.053-1.688-.344-1.229-.464-2.036-1.748-2.096-1.831-.061-.082-.505-.672-.505-1.282 0-.609.317-.912.428-1.033.111-.122.243-.153.324-.153.082 0 .163.003.234.007.076.004.177-.029.278.212.102.243.344.838.374.899.03.061.051.132.01.213-.04.082-.06.133-.121.203-.06.072-.128.161-.183.216-.06.061-.124.128-.053.25.071.121.314.517.674.838.463.413.854.542.975.602.122.061.192.051.264-.03.071-.082.304-.355.385-.477.081-.121.163-.101.273-.06.111.04.707.333.829.394.121.061.203.091.233.142.03.05.03.293-.114.698zM12 2C6.477 2 2 6.477 2 12c0 1.89.525 3.66 1.438 5.168L2 22l4.98-1.309A9.96 9.96 0 0 0 12 22c5.523 0 10-4.477 10-10S17.523 2 12 2z"/></svg>
+  </a>
+
+  <!-- Footer -->
+  <footer style="border-top:1px solid rgba(248, 245, 238, 0.08); background:#060209; padding:48px 0 32px 0;">
+    <div class="shell" style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:24px;">
+      <div>
+        <div style="font-family:var(--font-mono); font-size:13px; font-weight:700; color:var(--shunya-magenta); letter-spacing:0.3em; margin-bottom:6px;">SHOONYA</div>
+        <p style="font-size:12px; color:#8c8599; margin:0;">From Shoonya, Everything Begins · India · Worldwide</p>
+      </div>
+      <div style="display:flex; gap:20px; font-family:var(--font-mono); font-size:11px; text-transform:uppercase;">
+        <a href="/events" style="color:#bfb8c9; text-decoration:none;">Events</a>
+        <a href="/private-experiences" style="color:#bfb8c9; text-decoration:none;">Private Experiences</a>
+        <a href="/about" style="color:#bfb8c9; text-decoration:none;">About</a>
+        <a href="/contact" style="color:#bfb8c9; text-decoration:none;">Contact</a>
+        <a href="/admin" style="color:#00ffaa; text-decoration:none;">Admin</a>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    var currentWhen = "upcoming";
+    
+    function setWhenFilter(when) {
+      currentWhen = when;
+      document.querySelectorAll(".filter-btn-group .filter-btn").forEach(b => b.classList.remove("active"));
+      if (when === "upcoming") document.getElementById("btnWhenUpcoming").classList.add("active");
+      else if (when === "past") document.getElementById("btnWhenPast").classList.add("active");
+      else document.getElementById("btnWhenAll").classList.add("active");
+      applyFilters();
+    }
+
+    function applyFilters() {
+      var cat = document.getElementById("selectCategory").value;
+      var city = document.getElementById("selectCity").value;
+      renderEventsList(currentWhen, cat, city);
+    }
+
+    function renderEventsList(when, category, city) {
+      var container = document.getElementById("eventsGrid");
+      var empty = document.getElementById("eventsEmptyState");
+      var countLabel = document.getElementById("filterCount");
+      var data = window.SHUNYA_DATA || {};
+      var allEvents = (data.events || []).filter(e => e.status === "published");
+      var now = Date.now();
+
+      var filtered = allEvents.filter(ev => {
+        var evTime = ev.date ? new Date(ev.date).getTime() : now;
+        var isEvPast = evTime < now;
+        if (when === "upcoming" && isEvPast) return false;
+        if (when === "past" && !isEvPast) return false;
+        if (category && ev.category !== category) return false;
+        if (city && (!ev.city || ev.city.indexOf(city) === -1)) return false;
+        return true;
+      });
+
+      countLabel.innerText = "Showing " + filtered.length + " event" + (filtered.length === 1 ? "" : "s");
+
+      if (filtered.length === 0) {
+        container.style.display = "none";
+        empty.style.display = "block";
+        return;
+      }
+
+      empty.style.display = "none";
+      container.style.display = "grid";
+
+      var waNum = (data.brand && data.brand.whatsapp) || "910000000000";
+
+      container.innerHTML = filtered.map(ev => {
+        var slug = ev.slug || ev.id;
+        var isSoldOut = ev.status === "sold-out";
+        var isSecret = ev.status === "secret-rsvp";
+        var statusBadge = isSoldOut ? '<span class="badge badge-sold">Sold Out</span>' :
+                          (isSecret ? '<span class="badge badge-secret">Secret RSVP</span>' : '<span class="badge badge-live">Guestlist Open</span>');
+        var waMsg = encodeURIComponent("Hi SHUNYA! I'd like to RSVP / request access for " + ev.title + " (" + (ev.dateLabel || "Upcoming") + ").");
+        var posterSrc = ev.poster || "/uploads/left.jpg";
+
+        return `
+          <article class="event-card">
+            <div class="event-poster-wrap">
+              <img src="${posterSrc}" alt="${ev.title} poster" class="event-poster-img" loading="lazy" onerror="this.src='/uploads/left.jpg'" />
+              <div class="event-poster-overlay"></div>
+              <div style="position:absolute; top:16px; left:16px; right:16px; display:flex; justify-content:space-between; align-items:center;">
+                <span class="badge" style="background:rgba(0,0,0,0.6); color:#fff; border:1px solid rgba(255,255,255,0.2);">${ev.category || "Electronic Music"}</span>
+                ${statusBadge}
+              </div>
+            </div>
+            <div class="event-body">
+              <div style="font-family:var(--font-mono); font-size:11px; color:#b5adbf; margin-bottom:6px;">
+                ${ev.dateLabel || "Date TBA"} · ${ev.city || "City TBA"}
+              </div>
+              <h2 style="font-size:20px; font-weight:700; margin:0 0 8px 0; color:#fff; line-height:1.2;">
+                <a href="/events/${slug}" style="color:inherit; text-decoration:none;">${ev.title}</a>
+              </h2>
+              <p style="font-size:13px; color:#d4cfde; line-height:1.5; margin:0 0 16px 0; flex:1;">
+                ${ev.shortDescription || ev.description || ""}
+              </p>
+              <div style="font-family:var(--font-mono); font-size:11px; color:var(--shunya-magenta); margin-bottom:16px;">
+                <strong>Lineup:</strong> ${ev.lineup || "Artist Lineup TBA"}
+              </div>
+              <div style="display:flex; justify-content:space-between; align-items:center; gap:8px; border-top:1px solid rgba(255,255,255,0.08); padding-top:16px; flex-wrap:wrap;">
+                <span style="font-family:var(--font-mono); font-size:12px; font-weight:700; color:#fff;">
+                  ${ev.ticketPrice || "TBA"}
+                </span>
+                <div style="display:flex; gap:8px;">
+                  <a href="/events/${slug}" class="btn-ghost" style="padding:6px 12px; font-size:11px;">Details →</a>
+                  <a href="https://wa.me/${waNum}?text=${waMsg}" target="_blank" class="btn-primary" style="padding:6px 12px; font-size:11px;">RSVP ↗</a>
+                </div>
+              </div>
+            </div>
+          </article>
+        `;
+      }).join("");
+    }
+
+    // Scroll progress handler
+    window.addEventListener("scroll", function() {
+      var total = document.documentElement.scrollHeight - window.innerHeight;
+      var pct = total > 0 ? (window.scrollY / total) * 100 : 0;
+      var bar = document.getElementById("shunyaScrollProgress");
+      if (bar) bar.style.width = pct + "%";
+    }, { passive: true });
+
+    // Mobile nav toggle
+    function toggleMobileNav() {
+      var d = document.getElementById("mobileDrawer");
+      d.style.display = (d.style.display === "flex") ? "none" : "flex";
+    }
+
+    // Quick Talk modal
+    function openQuickTalk() {
+      document.getElementById("quickTalkModal").style.display = "flex";
+    }
+    function closeQuickTalk() {
+      document.getElementById("quickTalkModal").style.display = "none";
+    }
+    document.addEventListener("keydown", function(e) { if (e.key === "Escape") closeQuickTalk(); });
+
+    async function handleQuickTalkSubmit(e) {
+      e.preventDefault();
+      var btn = document.getElementById("qtSubmitBtn");
+      var status = document.getElementById("qtStatus");
+      var name = document.getElementById("qtName").value.trim();
+      var contact = document.getElementById("qtContact").value.trim();
+      var message = document.getElementById("qtMessage").value.trim();
+
+      btn.disabled = true;
+      status.style.display = "block";
+      status.style.background = "rgba(175, 0, 241, 0.2)";
+      status.style.color = "#ecd2ff";
+      status.innerText = "Submitting your message...";
+
+      try {
+        var res = await fetch("/api/enquiries", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            name: name,
+            email: contact.includes("@") ? contact : "",
+            phone: !contact.includes("@") ? contact : "",
+            intent: "Quick Talk",
+            message: message
+          })
+        });
+        var r = await res.json();
+        if (r.ok) {
+          status.style.background = "rgba(0, 255, 170, 0.15)";
+          status.style.color = "#aaffdf";
+          status.innerText = "Thank you! Your message (" + r.enquiry.id + ") has been received. The team will connect with you shortly.";
+          document.getElementById("quickTalkForm").reset();
+        } else {
+          throw new Error(r.error || "Submission failed");
+        }
+      } catch(err) {
+        status.style.background = "rgba(255, 60, 60, 0.2)";
+        status.style.color = "#ffcccc";
+        status.innerText = "Notice: " + err.message;
+      } finally {
+        btn.disabled = false;
+      }
+    }
+
+    function sendQuickWhatsApp() {
+      var name = document.getElementById("qtName").value.trim() || "Guest";
+      var msg = document.getElementById("qtMessage").value.trim() || "I would like to speak with the SHUNYA studio.";
+      var waNum = (window.SHUNYA_DATA && window.SHUNYA_DATA.brand && window.SHUNYA_DATA.brand.whatsapp) || "910000000000";
+      var url = "https://wa.me/" + waNum + "?text=" + encodeURIComponent("Hi SHUNYA! I'm " + name + ". " + msg);
+      window.open(url, "_blank");
+    }
+
+    // Audio synthesizer
+    var audioCtx = null, isAudio = false, oscNodes = [], gainNode = null;
+    function shunyaToggleAudio() {
+      var dot = document.getElementById("shunyaSoundDot");
+      var lbl = document.getElementById("shunyaSoundLabel");
+      if (!isAudio) {
+        try {
+          var AudioContext = window.AudioContext || window.webkitAudioContext;
+          if (!audioCtx) audioCtx = new AudioContext();
+          if (audioCtx.state === "suspended") audioCtx.resume();
+          gainNode = audioCtx.createGain();
+          gainNode.gain.setValueAtTime(0.01, audioCtx.currentTime);
+          gainNode.gain.exponentialRampToValueAtTime(0.12, audioCtx.currentTime + 3);
+          var filter = audioCtx.createBiquadFilter();
+          filter.type = "lowpass"; filter.frequency.setValueAtTime(280, audioCtx.currentTime);
+          var sub = audioCtx.createOscillator(); sub.type = "sine"; sub.frequency.setValueAtTime(54, audioCtx.currentTime);
+          sub.connect(filter); sub.start();
+          var drone = audioCtx.createOscillator(); drone.type = "triangle"; drone.frequency.setValueAtTime(108, audioCtx.currentTime);
+          drone.connect(filter); drone.start();
+          filter.connect(gainNode); gainNode.connect(audioCtx.destination);
+          oscNodes = [sub, drone]; isAudio = true;
+          dot.style.background = "#00ffaa"; dot.style.boxShadow = "0 0 10px #00ffaa";
+          lbl.innerText = "Audio: LIVE ●";
+        } catch(e){}
+      } else {
+        if (gainNode && audioCtx) {
+          gainNode.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.8);
+          setTimeout(() => { oscNodes.forEach(o => { try{o.stop(); o.disconnect();}catch(e){} }); oscNodes = []; }, 800);
+        }
+        isAudio = false; dot.style.background = "#888"; dot.style.boxShadow = "none"; lbl.innerText = "Audio: OFF";
+      }
+    }
+
+    // Initialize on load
+    document.addEventListener("DOMContentLoaded", function() {
+      applyFilters();
+      var waNum = (window.SHUNYA_DATA && window.SHUNYA_DATA.brand && window.SHUNYA_DATA.brand.whatsapp) || "910000000000";
+      var fab = document.querySelector(".shunya-wa-fab");
+      if (fab) fab.href = "https://wa.me/" + waNum + "?text=" + encodeURIComponent("Hi SHUNYA — I'd like to enquire about your upcoming events.");
+    });
+  </script>
+
+  <!-- Responsive helper style -->
+  <style>
+    @media (min-width: 768px) {
+      .md-nav { display: flex !important; }
+      .md-hidden { display: none !important; }
+    }
+  </style>
+
+</body>
+</html>

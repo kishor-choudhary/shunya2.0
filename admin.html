@@ -1,0 +1,1685 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SHOONYA Studio // Admin Control Room</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Plus+Jakarta+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #0b0210;
+      --card-bg: #140520;
+      --card-border: rgba(175, 0, 241, 0.25);
+      --purple: #af00f1;
+      --magenta: #d900ff;
+      --bone: #f8f5ee;
+      --ash: #8c8599;
+      --green: #00ffaa;
+      --font-sans: "Plus Jakarta Sans", sans-serif;
+      --font-mono: "JetBrains Mono", monospace;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background: var(--bg);
+      color: var(--bone);
+      font-family: var(--font-sans);
+      display: flex;
+      height: 100vh;
+      overflow: hidden;
+    }
+    /* Sidebar */
+    aside {
+      width: 260px;
+      background: #0f0316;
+      border-right: 1px solid var(--card-border);
+      display: flex;
+      flex-direction: column;
+      flex-shrink: 0;
+    }
+    .brand-header {
+      padding: 24px 20px;
+      border-bottom: 1px solid var(--card-border);
+    }
+    .brand-title {
+      font-family: var(--font-mono);
+      font-size: 15px;
+      font-weight: 700;
+      letter-spacing: 0.2em;
+      color: var(--magenta);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .brand-sub {
+      font-size: 11px;
+      color: var(--ash);
+      margin-top: 4px;
+      letter-spacing: 0.05em;
+    }
+    .nav-menu {
+      list-style: none;
+      padding: 16px 12px;
+      flex: 1;
+      overflow-y: auto;
+    }
+    .nav-item {
+      padding: 10px 14px;
+      border-radius: 6px;
+      color: #b3acc0;
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      transition: all 0.2s;
+      margin-bottom: 4px;
+    }
+    .nav-item:hover {
+      background: rgba(175, 0, 241, 0.15);
+      color: #fff;
+    }
+    .nav-item.active {
+      background: var(--purple);
+      color: #fff;
+      box-shadow: 0 0 15px rgba(175, 0, 241, 0.4);
+    }
+    .sidebar-footer {
+      padding: 16px 20px;
+      border-top: 1px solid var(--card-border);
+      font-size: 11px;
+      color: var(--ash);
+      font-family: var(--font-mono);
+    }
+    .live-link {
+      color: var(--green);
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      margin-top: 8px;
+    }
+    /* Main Area */
+    main {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+    }
+    header {
+      height: 64px;
+      background: #110419;
+      border-bottom: 1px solid var(--card-border);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 32px;
+    }
+    .header-title {
+      font-size: 16px;
+      font-weight: 700;
+      font-family: var(--font-mono);
+      letter-spacing: 0.1em;
+    }
+    .btn {
+      padding: 8px 18px;
+      border-radius: 6px;
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+      border: none;
+      transition: all 0.2s;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .btn-primary {
+      background: linear-gradient(135deg, var(--purple), var(--magenta));
+      color: #fff;
+      box-shadow: 0 0 15px rgba(175, 0, 241, 0.4);
+    }
+    .btn-primary:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 0 20px rgba(217, 0, 255, 0.6);
+    }
+    .btn-ghost {
+      background: rgba(255, 255, 255, 0.08);
+      color: var(--bone);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+    }
+    .btn-ghost:hover {
+      background: rgba(255, 255, 255, 0.16);
+    }
+    .btn-sm { padding: 5px 10px; font-size: 11px; }
+    .btn-danger { background: #ff2255; color: #fff; }
+
+    .content-viewport {
+      flex: 1;
+      overflow-y: auto;
+      padding: 32px;
+    }
+    .tab-section {
+      display: none;
+    }
+    .tab-section.active {
+      display: block;
+    }
+
+    /* Cards & Grids */
+    .grid-stats {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 16px;
+      margin-bottom: 28px;
+    }
+    .stat-card {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 8px;
+      padding: 20px;
+    }
+    .stat-lbl {
+      font-size: 11px;
+      font-family: var(--font-mono);
+      color: var(--ash);
+      text-transform: uppercase;
+      letter-spacing: 0.15em;
+    }
+    .stat-val {
+      font-size: 32px;
+      font-weight: 800;
+      color: var(--bone);
+      margin-top: 8px;
+    }
+
+    .card {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 8px;
+      padding: 24px;
+      margin-bottom: 24px;
+    }
+    .card-title {
+      font-size: 17px;
+      font-weight: 700;
+      margin-bottom: 4px;
+    }
+    .card-desc {
+      font-size: 12px;
+      color: var(--ash);
+      margin-bottom: 20px;
+    }
+
+    .form-group {
+      margin-bottom: 18px;
+    }
+    .form-label {
+      display: block;
+      font-size: 11px;
+      font-family: var(--font-mono);
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: #b5adc2;
+      margin-bottom: 6px;
+    }
+    .form-input, .form-textarea, .form-select {
+      width: 100%;
+      background: #09020e;
+      border: 1px solid rgba(175, 0, 241, 0.3);
+      color: var(--bone);
+      padding: 10px 14px;
+      border-radius: 6px;
+      font-size: 13px;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+    .form-input:focus, .form-textarea:focus, .form-select:focus {
+      border-color: var(--magenta);
+      box-shadow: 0 0 10px rgba(217, 0, 255, 0.3);
+    }
+    .form-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+    }
+
+    /* Table */
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 13px;
+    }
+    th {
+      text-align: left;
+      padding: 12px 14px;
+      background: rgba(0, 0, 0, 0.4);
+      color: var(--ash);
+      font-family: var(--font-mono);
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      border-bottom: 1px solid var(--card-border);
+    }
+    td {
+      padding: 12px 14px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+      vertical-align: middle;
+    }
+    tr:hover td {
+      background: rgba(255, 255, 255, 0.02);
+    }
+    .badge {
+      display: inline-block;
+      padding: 3px 8px;
+      border-radius: 4px;
+      font-size: 10px;
+      font-family: var(--font-mono);
+      font-weight: 700;
+      text-transform: uppercase;
+    }
+    .badge-new { background: rgba(0, 255, 170, 0.2); color: #00ffaa; border: 1px solid #00ffaa; }
+    .badge-contacted { background: rgba(251, 233, 72, 0.2); color: #fbe948; border: 1px solid #fbe948; }
+    .badge-confirmed { background: rgba(175, 0, 241, 0.25); color: #e0a0ff; border: 1px solid var(--purple); }
+
+    /* Media Previews */
+    .media-preview-box {
+      border: 1px dashed rgba(175, 0, 241, 0.4);
+      border-radius: 8px;
+      padding: 16px;
+      text-align: center;
+      background: rgba(0,0,0,0.3);
+      margin-top: 8px;
+    }
+    .media-preview-img {
+      max-height: 140px;
+      border-radius: 4px;
+      object-fit: cover;
+      display: block;
+      margin: 0 auto 10px auto;
+    }
+
+    /* Toast */
+    #toast {
+      position: fixed;
+      bottom: 24px;
+      right: 24px;
+      background: #00ffaa;
+      color: #000;
+      padding: 12px 24px;
+      border-radius: 6px;
+      font-weight: 700;
+      font-size: 13px;
+      box-shadow: 0 8px 30px rgba(0, 255, 170, 0.5);
+      opacity: 0;
+      transform: translateY(20px);
+      transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+      pointer-events: none;
+      z-index: 999;
+    }
+    #toast.show {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Password Authentication Gate Overlay -->
+  <div id="adminAuthGate" style="position:fixed; inset:0; z-index:100000; background:#07020c; display:flex; align-items:center; justify-content:center; padding:20px; background-image: radial-gradient(ellipse at 50% 30%, rgba(175, 0, 241, 0.22) 0%, transparent 70%);">
+    <div style="background:#13041d; border:1px solid rgba(175, 0, 241, 0.45); border-radius:14px; max-width:440px; width:100%; padding:36px; box-shadow:0 25px 80px rgba(0,0,0,0.9), 0 0 50px rgba(175,0,241,0.25); text-align:center;">
+      <div style="width:54px; height:54px; border-radius:50%; background:rgba(175,0,241,0.15); border:1px solid var(--magenta); display:inline-flex; align-items:center; justify-content:center; margin-bottom:16px;">
+        <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="var(--magenta)" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
+      </div>
+      <div style="font-family:var(--font-mono); font-size:11px; letter-spacing:0.3em; color:var(--magenta); text-transform:uppercase; margin-bottom:6px;">SHOONYA Studio Gate</div>
+      <h2 style="font-size:22px; font-weight:700; color:#fff; margin:0 0 10px 0;">Studio Control Room</h2>
+      <p style="font-size:13px; color:#a89eb5; line-height:1.5; margin:0 0 24px 0;">Enter master admin credentials to configure live events, gallery, and site routing.</p>
+      
+      <form onsubmit="handleAdminLogin(event)" style="display:flex; flex-direction:column; gap:14px;">
+        <input type="password" id="gatePasswordInput" required placeholder="Enter password" class="form-input" style="font-size:14px; text-align:center; letter-spacing:0.1em;" autofocus />
+        <button type="submit" id="gateSubmitBtn" class="btn btn-primary" style="justify-content:center; padding:12px; font-size:13px;">Authenticate &amp; Enter &rarr;</button>
+        <div id="gateErrorMsg" style="display:none; padding:10px; border-radius:6px; background:rgba(255, 60, 60, 0.2); color:#ffcccc; font-size:12px; font-family:var(--font-mono);"></div>
+      </form>
+      <div style="margin-top:20px; font-size:11px; font-family:var(--font-mono); color:#746b80;">Protected by SHUNYA Studio Token Auth</div>
+    </div>
+  </div>
+
+  <!-- Sidebar -->
+  <aside>
+    <div class="brand-header">
+      <div class="brand-title">
+        <span style="display:inline-block; width:8px; height:8px; border-radius:50%; background:var(--green); box-shadow:0 0 10px var(--green);"></span>
+        SHOONYA
+      </div>
+      <div class="brand-sub">Studio Content Control Room</div>
+    </div>
+    <ul class="nav-menu">
+      <li class="nav-item active" data-tab="tab-dashboard" onclick="switchTab('tab-dashboard', this)">Dashboard</li>
+      <li class="nav-item" data-tab="tab-brand" onclick="switchTab('tab-brand', this)">Brand & Identity</li>
+      <li class="nav-item" data-tab="tab-hero" onclick="switchTab('tab-hero', this)">Hero & Typography</li>
+      <li class="nav-item" data-tab="tab-arches" onclick="switchTab('tab-arches', this)">3D Arch Media</li>
+      <li class="nav-item" data-tab="tab-events" onclick="switchTab('tab-events', this)">Events Manager</li>
+      <li class="nav-item" data-tab="tab-gallery" onclick="switchTab('tab-gallery', this)">Sliding Gallery</li>
+      <li class="nav-item" data-tab="tab-theme" onclick="switchTab('tab-theme', this)">Atmosphere & Theme</li>
+      <li class="nav-item" data-tab="tab-enquiries" onclick="switchTab('tab-enquiries', this)">Enquiries Inbox</li>
+    </ul>
+    <div class="sidebar-footer">
+      <div>Store: <code style="color:var(--magenta);">data/site-data.json</code></div>
+      <a href="/" target="_blank" class="live-link">Open Live Site ↗</a>
+      <button onclick="adminLogout()" style="background:none; border:none; color:#ff6b6b; font-family:var(--font-mono); font-size:11px; cursor:pointer; margin-top:10px; display:block; padding:0;">[Lock / Sign Out]</button>
+    </div>
+  </aside>
+
+  <!-- Main Content -->
+  <main>
+    <header>
+      <div id="headerTitle" class="header-title">DASHBOARD OVERVIEW</div>
+      <div style="display:flex; gap:10px; align-items:center;">
+        <button onclick="adminLogout()" class="btn btn-ghost btn-sm" style="color:#ff8888; border-color:rgba(255,100,100,0.3);">Lock</button>
+        <a href="/" target="_blank" class="btn btn-ghost">Preview Site</a>
+        <button onclick="saveAllChanges()" class="btn btn-primary">Save All Changes</button>
+      </div>
+    </header>
+
+    <div class="content-viewport">
+
+      <!-- TAB 1: DASHBOARD -->
+      <section id="tab-dashboard" class="tab-section active">
+        <div class="grid-stats">
+          <div class="stat-card">
+            <div class="stat-lbl">Active Events</div>
+            <div id="statEvents" class="stat-val">2</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-lbl">Customer Enquiries</div>
+            <div id="statEnquiries" class="stat-val">1</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-lbl">Sliding Gallery Photos</div>
+            <div id="statGallery" class="stat-val">8</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-lbl">Status</div>
+            <div class="stat-val" style="font-size:20px; color:var(--green); margin-top:14px;">● LIVE</div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-title">Quick Controls</div>
+          <div class="card-desc">Jump straight into customizing different sections of the website.</div>
+          <div style="display:flex; gap:12px; flex-wrap:wrap;">
+            <button onclick="switchTab('tab-brand')" class="btn btn-ghost">Edit Brand & Contacts</button>
+            <button onclick="switchTab('tab-hero')" class="btn btn-ghost">Customize Hero & Copy</button>
+            <button onclick="switchTab('tab-events')" class="btn btn-ghost">Manage Events</button>
+            <button onclick="switchTab('tab-gallery')" class="btn btn-ghost">Configure Gallery Slider</button>
+            <button onclick="switchTab('tab-theme')" class="btn btn-ghost">Atmosphere & Palette</button>
+            <button onclick="switchTab('tab-enquiries')" class="btn btn-ghost">View Received Bookings</button>
+          </div>
+        </div>
+
+        <!-- Launch Readiness Checklist -->
+        <div class="card">
+          <div class="card-title">Launch Readiness & System Health Audit</div>
+          <div class="card-desc">Real-time health check inspired by SHUNYA Studio standards.</div>
+          <div id="adminChecklist" style="display:flex; flex-direction:column; gap:10px; margin-top:14px;">
+            <!-- Populated dynamically via renderChecklist() -->
+          </div>
+        </div>
+      </section>
+
+      <!-- TAB 2: BRAND & CONTACTS -->
+      <section id="tab-brand" class="tab-section">
+        <div class="card">
+          <div class="card-title">Brand Identity & Contact Details</div>
+          <div class="card-desc">Configures the brand name, tagline, email, phone, and WhatsApp numbers used across all pages and buttons.</div>
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label">Brand Name</label>
+              <input type="text" id="brandName" class="form-input" />
+            </div>
+            <div class="form-group">
+              <label class="form-label">Legal Name</label>
+              <input type="text" id="legalName" class="form-input" />
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Brand Tagline</label>
+            <input type="text" id="brandTagline" class="form-input" />
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label">Contact Email</label>
+              <input type="email" id="contactEmail" class="form-input" />
+            </div>
+            <div class="form-group">
+              <label class="form-label">Phone Display</label>
+              <input type="text" id="contactPhone" class="form-input" />
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label">WhatsApp Number (e.g. 919876543210)</label>
+              <input type="text" id="whatsappNumber" class="form-input" />
+            </div>
+            <div class="form-group">
+              <label class="form-label">Instagram URL</label>
+              <input type="url" id="instagramUrl" class="form-input" />
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Footer Location Tag</label>
+            <input type="text" id="locationTag" class="form-input" />
+          </div>
+
+          <div style="margin-top:28px; padding-top:20px; border-top:1px solid var(--card-border);">
+            <div class="card-title" style="font-size:15px; margin-bottom:4px;">Department Email Routing (Contact Tab)</div>
+            <div class="card-desc">Submissions from each contact category route directly to these email destinations.</div>
+            <div class="form-row">
+              <div class="form-group">
+                <label class="form-label">Private Bookings Email</label>
+                <input type="email" id="routePrivateBookings" class="form-input" placeholder="bookings@shunya.example" />
+              </div>
+              <div class="form-group">
+                <label class="form-label">Artist Collaborations Email</label>
+                <input type="email" id="routeArtistCollaborations" class="form-input" placeholder="artists@shunya.example" />
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="form-group">
+                <label class="form-label">Brand Partnerships Email</label>
+                <input type="email" id="routeBrandPartnerships" class="form-input" placeholder="partnerships@shunya.example" />
+              </div>
+              <div class="form-group">
+                <label class="form-label">Sponsorships Email</label>
+                <input type="email" id="routeSponsorships" class="form-input" placeholder="sponsors@shunya.example" />
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="form-label">General Enquiries Email</label>
+              <input type="email" id="routeGeneral" class="form-input" placeholder="hello@shunya.example" />
+            </div>
+          </div>
+
+          <button onclick="saveAllChanges()" class="btn btn-primary" style="margin-top:12px;">Save Brand &amp; Routing Settings</button>
+        </div>
+      </section>
+
+      <!-- TAB 3: HERO & TYPOGRAPHY -->
+      <section id="tab-hero" class="tab-section">
+        <div class="card">
+          <div class="card-title">Hero Headline & Scroll Copy</div>
+          <div class="card-desc">Controls the main headline, kicker, and animated disciplines.</div>
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label">Headline Prefix (Bold Sans)</label>
+              <input type="text" id="headlinePrefix" class="form-input" placeholder="From Shoonya, " />
+            </div>
+            <div class="form-group">
+              <label class="form-label">Headline Highlight (Editorial Italic Serif)</label>
+              <input type="text" id="headlineHighlight" class="form-input" placeholder="Everything Begins" />
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Hero Kicker / Subtitle</label>
+            <input type="text" id="heroKicker" class="form-input" />
+          </div>
+          <div class="form-group">
+            <label class="form-label">Categories / Badges (comma separated)</label>
+            <input type="text" id="heroCategories" class="form-input" />
+          </div>
+          <div class="form-group">
+            <label class="form-label">Disciplines (comma separated)</label>
+            <textarea id="heroDisciplines" class="form-textarea" rows="3"></textarea>
+          </div>
+          <button onclick="saveAllChanges()" class="btn btn-primary">Save Hero Copy</button>
+        </div>
+      </section>
+
+      <!-- TAB 4: 3D ARCH MEDIA -->
+      <section id="tab-arches" class="tab-section">
+        <div class="card">
+          <div class="card-title">3D Hero Arch Frames</div>
+          <div class="card-desc">Set the left, right, and 50-frame middle zoom images.</div>
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label">Left Arch Image</label>
+              <div style="display:flex; gap:8px;">
+                <input type="text" id="archLeft" class="form-input" oninput="previewLeftArch(this.value)" />
+                <input type="file" id="fileArchLeft" accept="image/*" style="display:none;" onchange="uploadArchImage(this, 'left')" />
+                <button type="button" onclick="document.getElementById('fileArchLeft').click()" class="btn btn-ghost" style="white-space:nowrap;">Upload</button>
+              </div>
+              <div class="media-preview-box">
+                <img id="imgPreviewLeft" class="media-preview-img" src="/uploads/left.jpg" />
+                <span style="font-size:11px; color:var(--ash);">Current Left Arch Image</span>
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Right Arch Image</label>
+              <div style="display:flex; gap:8px;">
+                <input type="text" id="archRight" class="form-input" oninput="previewRightArch(this.value)" />
+                <input type="file" id="fileArchRight" accept="image/*" style="display:none;" onchange="uploadArchImage(this, 'right')" />
+                <button type="button" onclick="document.getElementById('fileArchRight').click()" class="btn btn-ghost" style="white-space:nowrap;">Upload</button>
+              </div>
+              <div class="media-preview-box">
+                <img id="imgPreviewRight" class="media-preview-img" src="/uploads/right.jpg" />
+                <span style="font-size:11px; color:var(--ash);">Current Right Arch Image</span>
+              </div>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Middle Arch 50-Frame Zoom Sequence Path</label>
+            <input type="text" id="archFrames" class="form-input" value="/uploads/frames/ezgif-frame-" />
+            <p style="font-size:11px; color:var(--ash); margin-top:6px;">
+              Loads 50 consecutive frames (ezgif-frame-001.jpg to ezgif-frame-050.jpg) that scrub and zoom on scroll.
+            </p>
+          </div>
+          <button onclick="saveAllChanges()" class="btn btn-primary">Save Arch Media</button>
+        </div>
+      </section>
+
+      <!-- TAB 5: EVENTS MANAGER -->
+      <section id="tab-events" class="tab-section">
+        <div class="card">
+          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:16px;">
+            <div>
+              <div class="card-title">Events Calendar</div>
+              <div class="card-desc" style="margin-bottom:0;">Add, edit or update upcoming electronic music events.</div>
+            </div>
+            <button onclick="openAddEventModal()" class="btn btn-primary btn-sm">+ Add New Event</button>
+          </div>
+          <div style="overflow-x:auto;">
+            <table>
+              <thead>
+                <tr>
+                  <th>Title</th>
+                  <th>Category</th>
+                  <th>Date & Time</th>
+                  <th>Venue / City</th>
+                  <th>Status</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody id="eventsTableBody">
+                <!-- populated dynamically -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <!-- TAB 6: SLIDING GALLERY -->
+      <section id="tab-gallery" class="tab-section">
+        <div class="card">
+          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:16px;">
+            <div>
+              <div class="card-title">Right-To-Left Sliding Gallery</div>
+              <div class="card-desc" style="margin-bottom:0;">These images slide continuously from right to left in Stage 5 of the website.</div>
+            </div>
+            <div style="display:flex; gap:8px;">
+              <input type="file" id="fileGalleryUpload" accept="image/*" multiple style="display:none;" onchange="uploadGalleryImage(this)" />
+              <button type="button" onclick="document.getElementById('fileGalleryUpload').click()" class="btn btn-ghost btn-sm">Upload Photo(s)</button>
+              <button type="button" onclick="addGalleryImagePrompt()" class="btn btn-primary btn-sm">+ Add Image URL</button>
+            </div>
+          </div>
+          <div id="galleryList" style="display:grid; grid-template-columns:repeat(auto-fill, minmax(220px, 1fr)); gap:16px;">
+            <!-- populated dynamically -->
+          </div>
+          <button onclick="saveAllChanges()" class="btn btn-primary" style="margin-top:20px;">Save Gallery</button>
+        </div>
+      </section>
+
+      
+      <!-- TAB: ATMOSPHERE & THEME -->
+      <section id="tab-theme" class="tab-section">
+        <div class="card">
+          <div class="card-title">Atmosphere & Visual Palette</div>
+          <div class="card-desc">Inspired by the SHUNYA design system. Choose the lighting and color atmosphere for the live experience.</div>
+          <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(260px, 1fr)); gap:18px; margin-top:16px;">
+            <div id="themeCardVoid" onclick="selectTheme('void')" class="theme-card active" style="background:#0c0414; border:2px solid var(--purple); border-radius:10px; padding:18px; cursor:pointer; transition:all 0.2s;">
+              <div style="display:flex; justify-content:space-between; align-items:center;">
+                <strong style="color:#fff; font-size:15px;">Void & Lasers (Default)</strong>
+                <span id="badgeVoid" class="badge badge-confirmed">ACTIVE</span>
+              </div>
+              <p style="font-size:12px; color:var(--ash); margin:8px 0 14px 0;">Midnight black, laser purple and electric magenta warehouse mood.</p>
+              <div style="display:flex; gap:8px;">
+                <span style="width:24px; height:24px; border-radius:50%; background:#af00f1;"></span>
+                <span style="width:24px; height:24px; border-radius:50%; background:#d900ff;"></span>
+                <span style="width:24px; height:24px; border-radius:50%; background:#0a0312; border:1px solid #444;"></span>
+              </div>
+            </div>
+
+            <div id="themeCardDusk" onclick="selectTheme('dusk')" class="theme-card" style="background:#0f090e; border:1px solid var(--card-border); border-radius:10px; padding:18px; cursor:pointer; transition:all 0.2s;">
+              <div style="display:flex; justify-content:space-between; align-items:center;">
+                <strong style="color:#fff; font-size:15px;">Dusk & Ember</strong>
+                <span id="badgeDusk" class="badge badge-new" style="display:none;">ACTIVE</span>
+              </div>
+              <p style="font-size:12px; color:var(--ash); margin:8px 0 14px 0;">Warm crimson bougainvillea, golden sunset, and deep blue-hour sky.</p>
+              <div style="display:flex; gap:8px;">
+                <span style="width:24px; height:24px; border-radius:50%; background:#c1272d;"></span>
+                <span style="width:24px; height:24px; border-radius:50%; background:#f0a828;"></span>
+                <span style="width:24px; height:24px; border-radius:50%; background:#0a1119; border:1px solid #444;"></span>
+              </div>
+            </div>
+
+            <div id="themeCardCyber" onclick="selectTheme('cyber')" class="theme-card" style="background:#041209; border:1px solid var(--card-border); border-radius:10px; padding:18px; cursor:pointer; transition:all 0.2s;">
+              <div style="display:flex; justify-content:space-between; align-items:center;">
+                <strong style="color:#fff; font-size:15px;">Emerald Underground</strong>
+                <span id="badgeCyber" class="badge badge-new" style="display:none;">ACTIVE</span>
+              </div>
+              <p style="font-size:12px; color:var(--ash); margin:8px 0 14px 0;">Acid emerald, glowing neon mint, and underground bunker atmosphere.</p>
+              <div style="display:flex; gap:8px;">
+                <span style="width:24px; height:24px; border-radius:50%; background:#00ffaa;"></span>
+                <span style="width:24px; height:24px; border-radius:50%; background:#90e0ef;"></span>
+                <span style="width:24px; height:24px; border-radius:50%; background:#031008; border:1px solid #444;"></span>
+              </div>
+            </div>
+          </div>
+          <button onclick="saveAllChanges()" class="btn btn-primary" style="margin-top:20px;">Save Atmosphere Theme</button>
+        </div>
+      </section>
+
+      <!-- TAB 7: ENQUIRIES INBOX -->
+      <section id="tab-enquiries" class="tab-section">
+        <div class="card">
+          <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:12px; margin-bottom:16px;">
+            <div>
+              <div class="card-title">Customer Enquiries & Bookings</div>
+              <div class="card-desc" style="margin-bottom:0;">Live submissions from the experience booking form.</div>
+            </div>
+            <div style="display:flex; gap:10px;">
+              <a href="/api/admin/enquiries/export" target="_blank" class="btn btn-ghost btn-sm" style="color:var(--green); border-color:rgba(0,255,170,0.4); text-decoration:none;">
+                Download CSV ⤓
+              </a>
+            </div>
+          </div>
+          <div style="display:flex; gap:12px; margin-bottom:16px; flex-wrap:wrap; align-items:center;">
+            <input type="text" id="enquirySearch" placeholder="Search client name, phone, city..." class="form-input" style="max-width:280px;" oninput="filterEnquiries()" />
+            <div style="display:flex; gap:6px;">
+              <button onclick="setEnquiryFilter('ALL', this)" class="btn btn-sm btn-ghost filter-btn active">All</button>
+              <button onclick="setEnquiryFilter('New', this)" class="btn btn-sm btn-ghost filter-btn">New</button>
+              <button onclick="setEnquiryFilter('Contacted', this)" class="btn btn-sm btn-ghost filter-btn">Contacted</button>
+              <button onclick="setEnquiryFilter('Confirmed', this)" class="btn btn-sm btn-ghost filter-btn">Confirmed</button>
+            </div>
+          </div>
+          <div style="overflow-x:auto;">
+            <table>
+              <thead>
+                <tr>
+                  <th>Ref & Date</th>
+                  <th>Client</th>
+                  <th>Contact</th>
+                  <th>Experience</th>
+                  <th>Guests & Date</th>
+                  <th>Status</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody id="enquiriesTableBody">
+                <!-- populated dynamically -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+    </div>
+  </main>
+
+  <div id="toast">Changes saved to site-data.json!</div>
+
+  <script>
+    var currentData = null;
+
+    function switchTab(tabId, el) {
+      document.querySelectorAll(".tab-section").forEach(s => s.classList.remove("active"));
+      document.querySelectorAll(".nav-item").forEach(n => n.classList.remove("active"));
+      var target = document.getElementById(tabId);
+      if (target) target.classList.add("active");
+      if (!el) { el = document.querySelector(`.nav-item[data-tab="${tabId}"]`); }
+      if (el) el.classList.add("active");
+      var titleMap = {
+        "tab-dashboard": "DASHBOARD OVERVIEW",
+        "tab-brand": "BRAND & IDENTITY SETTINGS",
+        "tab-hero": "HERO & TYPOGRAPHY COPY",
+        "tab-arches": "3D ARCH MEDIA CONTROLS",
+        "tab-events": "UPCOMING EVENTS MANAGER",
+        "tab-gallery": "SLIDING GALLERY MANAGER",
+        "tab-enquiries": "ENQUIRIES & BOOKINGS INBOX",
+        "tab-theme": "ATMOSPHERE & VISUAL PALETTE"
+      };
+      var hTitle = document.getElementById("headerTitle");
+      if (hTitle && titleMap[tabId]) hTitle.innerText = titleMap[tabId];
+    }
+
+    function showToast(msg) {
+      var t = document.getElementById("toast");
+      if (msg) t.innerText = msg;
+      t.classList.add("show");
+      setTimeout(() => t.classList.remove("show"), 2800);
+    }
+
+    // Load initial data
+    
+    var activeEnquiryFilter = "ALL";
+
+    function setEnquiryFilter(filter, btn) {
+      activeEnquiryFilter = filter;
+      document.querySelectorAll(".filter-btn").forEach(b => b.classList.remove("active"));
+      if (btn) btn.classList.add("active");
+      renderEnquiries();
+    }
+
+    function filterEnquiries() {
+      renderEnquiries();
+    }
+
+    function selectTheme(themeId) {
+      if (!currentData) return;
+      currentData.theme = themeId;
+      document.querySelectorAll(".theme-card").forEach(c => {
+        c.style.borderColor = "var(--card-border)";
+        c.classList.remove("active");
+      });
+      document.querySelectorAll(".theme-card .badge").forEach(b => b.style.display = "none");
+
+      if (themeId === "void") {
+        document.getElementById("themeCardVoid").style.borderColor = "var(--purple)";
+        document.getElementById("badgeVoid").style.display = "inline-block";
+      } else if (themeId === "dusk") {
+        document.getElementById("themeCardDusk").style.borderColor = "#c1272d";
+        document.getElementById("badgeDusk").style.display = "inline-block";
+      } else if (themeId === "cyber") {
+        document.getElementById("themeCardCyber").style.borderColor = "#00ffaa";
+        document.getElementById("badgeCyber").style.display = "inline-block";
+      }
+      showToast("Theme switched to " + themeId.toUpperCase());
+      saveAllChanges();
+    }
+
+    function openEditEventModal(idx) {
+      var ev = currentData.events[idx] || {};
+      document.getElementById("editEventIndex").value = idx;
+      document.getElementById("eventModalTitle").innerText = "Edit: " + (ev.title || "Event");
+      document.getElementById("evTitle").value = ev.title || "";
+      document.getElementById("evSlug").value = ev.slug || (ev.id ? ev.id.replace(/[^a-zA-Z0-9_-]/g, "-") : "event-" + Date.now());
+      document.getElementById("evSubtitle").value = ev.subtitle || "";
+      document.getElementById("evCategory").value = ev.category || "Warehouse Series";
+      document.getElementById("evDateLabel").value = ev.dateLabel || "";
+      document.getElementById("evDateIso").value = ev.date || "";
+      document.getElementById("evVenue").value = ev.venue || "";
+      document.getElementById("evCity").value = ev.city || "Mumbai";
+      document.getElementById("evStatus").value = ev.status || "published";
+      document.getElementById("evTicketPrice").value = ev.ticketPrice || "₹1,500 onwards";
+      document.getElementById("evTicketUrl").value = ev.ticketUrl || "https://insider.in";
+      document.getElementById("evPoster").value = ev.poster || "/uploads/left.jpg";
+      document.getElementById("evPosterPreview").src = ev.poster || "/uploads/left.jpg";
+      document.getElementById("evLineup").value = ev.lineup || "";
+      document.getElementById("evShortDesc").value = ev.shortDescription || "";
+      document.getElementById("evDesc").value = ev.description || "";
+      
+      var faqs = ev.faqs || [
+        { q: "What is the entry and age policy?", a: "Strictly 21+ only. Physical ID required." },
+        { q: "When will the secret address be revealed?", a: "12 hours prior to doors opening." }
+      ];
+      document.getElementById("evFaqs").value = JSON.stringify(faqs, null, 2);
+
+      document.getElementById("adminEventModal").style.display = "flex";
+    }
+
+    function openAddEventModal() {
+      document.getElementById("editEventIndex").value = "-1";
+      document.getElementById("eventModalTitle").innerText = "Create New Event";
+      var nextNum = ((currentData.events || []).length + 1);
+      document.getElementById("evTitle").value = "SHUNYA 0" + nextNum + " — TBA";
+      document.getElementById("evSlug").value = "shunya-0" + nextNum + "-tba";
+      document.getElementById("evSubtitle").value = "Warehouse Series / Edition 0" + nextNum;
+      document.getElementById("evCategory").value = "Warehouse Series";
+      document.getElementById("evDateLabel").value = "Upcoming Session · Sunset to Night";
+      document.getElementById("evDateIso").value = new Date().toISOString();
+      document.getElementById("evVenue").value = "Secret Warehouse Venue";
+      document.getElementById("evCity").value = "Mumbai";
+      document.getElementById("evStatus").value = "published";
+      document.getElementById("evTicketPrice").value = "₹1,500 onwards";
+      document.getElementById("evTicketUrl").value = "https://insider.in";
+      document.getElementById("evPoster").value = "/uploads/left.jpg";
+      document.getElementById("evPosterPreview").src = "/uploads/left.jpg";
+      document.getElementById("evLineup").value = "Curated Headline · Ambient Support · Opening Act";
+      document.getElementById("evShortDesc").value = "Opening session with tuned acoustic sound and unified floor plan.";
+      document.getElementById("evDesc").value = "Custom tuned sound system, controlled volume, and full-range low end. Floor plan and light rig designed together.";
+      document.getElementById("evFaqs").value = JSON.stringify([
+        { q: "What is the entry policy?", a: "Strictly 21+ only. Physical government-issued ID required." },
+        { q: "When is the secret venue revealed?", a: "12 hours prior to doors opening via email/SMS." }
+      ], null, 2);
+
+      document.getElementById("adminEventModal").style.display = "flex";
+    }
+
+    function closeEventModal() {
+      document.getElementById("adminEventModal").style.display = "none";
+    }
+
+    function uploadEventPoster(input) {
+      var file = input.files && input.files[0];
+      if (!file) return;
+      var reader = new FileReader();
+      reader.onload = async function(e) {
+        var base64 = e.target.result;
+        var filename = "poster_" + Date.now() + "_" + file.name.replace(/[^a-zA-Z0-9._-]/g, "_");
+        try {
+          showToast("Uploading poster...");
+          var res = await fetch("/api/upload", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ filename: filename, base64: base64 })
+          });
+          var d = await res.json();
+          if (d.ok) {
+            document.getElementById("evPoster").value = d.url;
+            document.getElementById("evPosterPreview").src = d.url;
+            showToast("Poster uploaded successfully!");
+          }
+        } catch(err) {
+          alert("Poster upload error: " + err.message);
+        }
+      };
+      reader.readAsDataURL(file);
+    }
+
+    function saveEventFromModal() {
+      var idx = parseInt(document.getElementById("editEventIndex").value, 10);
+      var title = document.getElementById("evTitle").value.trim();
+      if (!title) { alert("Please enter an event title"); return; }
+
+      var parsedFaqs = [];
+      try {
+        var faqVal = document.getElementById("evFaqs").value.trim();
+        if (faqVal) parsedFaqs = JSON.parse(faqVal);
+      } catch(e) {
+        alert("FAQ field must be valid JSON: " + e.message);
+        return;
+      }
+
+      var slug = document.getElementById("evSlug").value.trim() || title.toLowerCase().replace(/[^a-z0-9]+/g, "-");
+
+      var evObj = {
+        id: idx >= 0 && currentData.events[idx] ? currentData.events[idx].id : ("shunya-" + Date.now()),
+        slug: slug,
+        title: title,
+        subtitle: document.getElementById("evSubtitle").value.trim(),
+        category: document.getElementById("evCategory").value,
+        dateLabel: document.getElementById("evDateLabel").value.trim(),
+        date: document.getElementById("evDateIso").value.trim() || new Date().toISOString(),
+        venue: document.getElementById("evVenue").value.trim(),
+        city: document.getElementById("evCity").value.trim() || "Mumbai",
+        status: document.getElementById("evStatus").value,
+        ticketPrice: document.getElementById("evTicketPrice").value.trim() || "TBA",
+        ticketUrl: document.getElementById("evTicketUrl").value.trim() || "https://insider.in",
+        poster: document.getElementById("evPoster").value.trim() || "/uploads/left.jpg",
+        lineup: document.getElementById("evLineup").value.trim(),
+        shortDescription: document.getElementById("evShortDesc").value.trim(),
+        description: document.getElementById("evDesc").value.trim(),
+        faqs: parsedFaqs
+      };
+
+      currentData.events = currentData.events || [];
+      if (idx >= 0 && idx < currentData.events.length) {
+        currentData.events[idx] = evObj;
+      } else {
+        currentData.events.push(evObj);
+      }
+      closeEventModal();
+      renderEvents();
+      saveAllChanges();
+    }
+
+    function togglePublishEvent(idx) {
+      var ev = currentData.events[idx];
+      if (!ev) return;
+      if (ev.status === "published") {
+        ev.status = "draft";
+        showToast("Event unpublished (Draft)");
+      } else {
+        ev.status = "published";
+        showToast("Event published (Live)");
+      }
+      renderEvents();
+      saveAllChanges();
+    }
+
+    function duplicateEvent(idx) {
+      var ev = currentData.events[idx];
+      if (!ev) return;
+      var copy = JSON.parse(JSON.stringify(ev));
+      copy.id = "shunya-" + Date.now();
+      copy.title = copy.title + " (Copy)";
+      copy.status = "draft";
+      currentData.events.splice(idx + 1, 0, copy);
+      renderEvents();
+      saveAllChanges();
+      showToast("Event duplicated as draft!");
+    }
+
+    function moveGalleryItem(idx, dir) {
+      var target = idx + dir;
+      if (target < 0 || target >= currentData.gallery.length) return;
+      var item = currentData.gallery.splice(idx, 1)[0];
+      currentData.gallery.splice(target, 0, item);
+      renderGallery();
+      saveAllChanges();
+    }
+
+    async function loadData() {
+      try {
+        var res = await fetch("/api/site-data");
+        currentData = await res.json();
+        renderDashboard();
+      } catch (err) {
+        console.error("Failed to load site data:", err);
+      }
+    }
+
+    function renderDashboard() {
+      if (!currentData) return;
+      var b = currentData.brand || {};
+      var h = currentData.hero || {};
+      var a = currentData.arches || {};
+
+      document.getElementById("statEvents").innerText = (currentData.events || []).length;
+      document.getElementById("statEnquiries").innerText = (currentData.enquiries || []).length;
+      document.getElementById("statGallery").innerText = (currentData.gallery || []).length;
+
+      // Brand inputs
+      document.getElementById("brandName").value = b.name || "SHOONYA";
+      document.getElementById("legalName").value = b.legalName || "";
+      document.getElementById("brandTagline").value = b.tagline || "";
+      document.getElementById("contactEmail").value = b.contactEmail || "";
+      document.getElementById("contactPhone").value = b.contactPhone || "";
+      document.getElementById("whatsappNumber").value = b.whatsapp || "";
+      document.getElementById("instagramUrl").value = b.instagram || "";
+      document.getElementById("locationTag").value = b.location || "";
+
+      // Contact Routing inputs
+      var cr = b.contactRouting || {};
+      if (document.getElementById("routePrivateBookings")) document.getElementById("routePrivateBookings").value = cr.privateBookings || "bookings@shunya.example";
+      if (document.getElementById("routeArtistCollaborations")) document.getElementById("routeArtistCollaborations").value = cr.artistCollaborations || "artists@shunya.example";
+      if (document.getElementById("routeBrandPartnerships")) document.getElementById("routeBrandPartnerships").value = cr.brandPartnerships || "partnerships@shunya.example";
+      if (document.getElementById("routeSponsorships")) document.getElementById("routeSponsorships").value = cr.sponsorships || "sponsors@shunya.example";
+      if (document.getElementById("routeGeneral")) document.getElementById("routeGeneral").value = cr.general || "hello@shunya.example";
+
+      // Hero inputs
+      document.getElementById("headlinePrefix").value = h.headlinePrefix || "From Shoonya, ";
+      document.getElementById("headlineHighlight").value = h.headlineHighlight || "Everything Begins";
+      document.getElementById("heroKicker").value = h.kicker || "";
+      document.getElementById("heroCategories").value = (h.categories || []).join(", ");
+      document.getElementById("heroDisciplines").value = (h.disciplines || []).join(", ");
+
+      // Arch inputs
+      document.getElementById("archLeft").value = a.left || "/uploads/left.jpg";
+      document.getElementById("archRight").value = a.right || "/uploads/right.jpg";
+      previewLeftArch(a.left || "/uploads/left.jpg");
+      previewRightArch(a.right || "/uploads/right.jpg");
+
+      // Tables & Audit
+      renderChecklist();
+      renderEvents();
+      renderGallery();
+      renderEnquiries();
+    }
+
+    function renderChecklist() {
+      var container = document.getElementById("adminChecklist");
+      if (!container || !currentData) return;
+      var b = currentData.brand || {};
+      var events = currentData.events || [];
+      var gallery = currentData.gallery || [];
+      var enquiries = currentData.enquiries || [];
+      var theme = currentData.theme || "void";
+
+      var items = [
+        {
+          label: "Brand Identity: " + (b.name || "SHOONYA"),
+          ok: !!(b.name && b.name.includes("SHOONYA")),
+          hint: "Official brand identity active across site"
+        },
+        {
+          label: "Contact Email: " + (b.contactEmail || "Not set"),
+          ok: !!(b.contactEmail && b.contactEmail !== "hello@shunya.example"),
+          hint: (b.contactEmail === "hello@shunya.example") ? "Using template placeholder email" : "Custom email configured"
+        },
+        {
+          label: "WhatsApp Booking Line: " + (b.whatsapp || "Not set"),
+          ok: !!(b.whatsapp && b.whatsapp !== "910000000000"),
+          hint: (b.whatsapp === "910000000000") ? "Using placeholder WhatsApp number (+91 0000000000)" : "Real WhatsApp direct line connected"
+        },
+        {
+          label: "Upcoming Events Published: " + events.length + " events",
+          ok: events.length > 0,
+          hint: events.length + " live calendar item(s) configured"
+        },
+        {
+          label: "Stage 5 Continuous Sliding Gallery: " + gallery.length + " photos",
+          ok: gallery.length >= 4,
+          hint: gallery.length + " curated festival frame(s) in marquee"
+        },
+        {
+          label: "Atmosphere & Palette: " + theme.toUpperCase(),
+          ok: true,
+          hint: "Lighting theme active for visitor experience"
+        },
+        {
+          label: "Enquiries Inbox: " + enquiries.length + " received",
+          ok: true,
+          hint: enquiries.filter(e => e.status === "New").length + " new unread message(s)"
+        }
+      ];
+
+      container.innerHTML = items.map(it => `
+        <div style="display:flex; justify-content:space-between; align-items:center; background:#0e0314; border:1px solid ${it.ok ? 'rgba(0,255,170,0.25)' : 'rgba(255,180,0,0.3)'}; border-radius:6px; padding:10px 14px;">
+          <div>
+            <div style="font-size:13px; font-weight:600; color:${it.ok ? '#fff' : '#fbe948'};">${it.label}</div>
+            <div style="font-size:11px; color:var(--ash);">${it.hint}</div>
+          </div>
+          <span class="badge ${it.ok ? 'badge-new' : 'badge-contacted'}">${it.ok ? 'READY' : 'ACTION'}</span>
+        </div>
+      `).join("");
+    }
+
+    function previewLeftArch(src) {
+      var el = document.getElementById("imgPreviewLeft");
+      if (el && src) el.src = src;
+    }
+    function previewRightArch(src) {
+      var el = document.getElementById("imgPreviewRight");
+      if (el && src) el.src = src;
+    }
+
+    function renderEvents() {
+      var tbody = document.getElementById("eventsTableBody");
+      var events = currentData.events || [];
+      tbody.innerHTML = events.map((ev, idx) => {
+        var slug = ev.slug || ev.id;
+        var statusColor = ev.status === "published" ? "#00ffaa" : (ev.status === "sold-out" ? "#ffaa00" : (ev.status === "secret-rsvp" ? "#d900ff" : "#888"));
+        var posterSrc = ev.poster || "/uploads/left.jpg";
+        return `
+        <tr>
+          <td>
+            <div style="display:flex; align-items:center; gap:12px;">
+              <img src="${posterSrc}" style="width:40px; height:50px; object-fit:cover; border-radius:4px; border:1px solid rgba(175,0,241,0.3);" onerror="this.src='/uploads/left.jpg'" />
+              <div>
+                <strong>${ev.title}</strong><br>
+                <span style="font-size:11px; font-family:var(--font-mono); color:var(--magenta);">/events/${slug}</span>
+              </div>
+            </div>
+          </td>
+          <td><span class="badge" style="background:rgba(175,0,241,0.2); border:1px solid var(--purple); color:#e0a0ff;">${ev.category || "Warehouse Series"}</span></td>
+          <td>${ev.dateLabel || ev.date || "TBA"}<br><span style="font-size:11px; color:var(--ash);">${ev.city || "Mumbai"}</span></td>
+          <td>${ev.venue || "TBA"}</td>
+          <td>
+            <span class="badge" style="border:1px solid ${statusColor}; color:${statusColor}; background:rgba(0,0,0,0.4);">${ev.status || "published"}</span>
+            <button onclick="togglePublishEvent(${idx})" class="btn btn-sm btn-ghost" style="margin-top:4px; font-size:10px; padding:2px 8px;">
+              ${ev.status === 'published' ? 'Unpublish' : 'Publish'}
+            </button>
+          </td>
+          <td>
+            <div style="display:flex; gap:6px; flex-wrap:wrap;">
+              <a href="/events/${slug}" target="_blank" class="btn btn-sm btn-ghost" title="View Public Page">View ↗</a>
+              <button onclick="openEditEventModal(${idx})" class="btn btn-sm btn-ghost" title="Edit Event Details">Edit</button>
+              <button onclick="duplicateEvent(${idx})" class="btn btn-sm btn-ghost" title="Duplicate this event">Duplicate</button>
+              <button onclick="deleteEvent(${idx})" class="btn btn-sm btn-danger">Delete</button>
+            </div>
+          </td>
+        </tr>
+      `;
+      }).join("");
+    }
+
+    function renderGallery() {
+      var list = document.getElementById("galleryList");
+      var gallery = currentData.gallery || [];
+      list.innerHTML = gallery.map((item, idx) => {
+        var isObj = typeof item === "object" && item !== null;
+        var src = isObj ? (item.src || "/uploads/left.jpg") : item;
+        var caption = isObj ? (item.caption || "Event Frame") : "Archive Frame #" + (idx + 1);
+        var orient = isObj ? (item.orientation || "landscape") : "landscape";
+        var dateLoc = isObj ? ((item.date || "Date TBA") + " · " + (item.location || "Location TBA")) : "Location TBA";
+
+        return `
+          <div style="background:#09020e; border:1px solid var(--card-border); border-radius:6px; overflow:hidden; display:flex; flex-direction:column;">
+            <div style="position:relative; width:100%; height:140px; background:#000;">
+              <img src="${src}" style="width:100%; height:100%; object-fit:cover;" onerror="this.src='/uploads/left.jpg'" />
+              <span style="position:absolute; top:8px; right:8px; background:rgba(0,0,0,0.7); border:1px solid rgba(255,255,255,0.2); border-radius:4px; padding:2px 6px; font-size:10px; font-family:var(--font-mono); color:var(--magenta); text-transform:uppercase;">${orient}</span>
+            </div>
+            <div style="padding:10px; background:#12041a; display:flex; flex-direction:column; gap:8px; flex:1;">
+              <div>
+                <label style="font-size:10px; font-family:var(--font-mono); color:var(--ash); text-transform:uppercase; letter-spacing:0.1em; display:block; margin-bottom:2px;">Caption</label>
+                <input type="text" value="${caption.replace(/"/g, '&quot;')}" onchange="updateGalleryMeta(${idx}, 'caption', this.value)" style="width:100%; background:#09020e; border:1px solid var(--input-border); color:#fff; padding:5px 8px; border-radius:4px; font-size:11px;" />
+              </div>
+              <div style="display:flex; gap:8px;">
+                <div style="flex:1;">
+                  <label style="font-size:10px; font-family:var(--font-mono); color:var(--ash); text-transform:uppercase; letter-spacing:0.1em; display:block; margin-bottom:2px;">Orientation</label>
+                  <select onchange="updateGalleryMeta(${idx}, 'orientation', this.value)" style="width:100%; background:#09020e; border:1px solid var(--input-border); color:#fff; padding:5px 8px; border-radius:4px; font-size:11px;">
+                    <option value="landscape" ${orient === 'landscape' ? 'selected' : ''}>Landscape</option>
+                    <option value="portrait" ${orient === 'portrait' ? 'selected' : ''}>Portrait</option>
+                  </select>
+                </div>
+                <div style="flex:1;">
+                  <label style="font-size:10px; font-family:var(--font-mono); color:var(--ash); text-transform:uppercase; letter-spacing:0.1em; display:block; margin-bottom:2px;">Date / Location</label>
+                  <input type="text" value="${dateLoc.replace(/"/g, '&quot;')}" onchange="updateGalleryMeta(${idx}, 'location', this.value)" style="width:100%; background:#09020e; border:1px solid var(--input-border); color:#fff; padding:5px 8px; border-radius:4px; font-size:11px;" />
+                </div>
+              </div>
+              <div style="padding-top:6px; border-top:1px solid rgba(255,255,255,0.08); display:flex; justify-content:space-between; align-items:center;">
+                <div style="display:flex; gap:4px;">
+                  <button onclick="moveGalleryItem(${idx}, -1)" class="btn btn-sm btn-ghost" ${idx === 0 ? "disabled" : ""} title="Move Left">←</button>
+                  <button onclick="moveGalleryItem(${idx}, 1)" class="btn btn-sm btn-ghost" ${idx === gallery.length - 1 ? "disabled" : ""} title="Move Right">→</button>
+                </div>
+                <span style="font-size:11px; font-family:var(--font-mono); color:var(--ash);">#${idx+1}</span>
+                <button onclick="deleteGalleryItem(${idx})" class="btn btn-sm btn-danger" title="Remove Frame">×</button>
+              </div>
+            </div>
+          </div>
+        `;
+      }).join("");
+    }
+
+    function updateGalleryMeta(idx, field, val) {
+      if (!currentData || !currentData.gallery || !currentData.gallery[idx]) return;
+      var item = currentData.gallery[idx];
+      if (typeof item === "string") {
+        currentData.gallery[idx] = {
+          id: "frame-" + Date.now() + "-" + idx,
+          src: item,
+          caption: "Archive Frame #" + (idx + 1),
+          orientation: "landscape",
+          date: "November 2026",
+          location: "SHUNYA Venue",
+          credit: "SHUNYA Production Archive"
+        };
+        item = currentData.gallery[idx];
+      }
+      if (field === "caption") item.caption = val;
+      else if (field === "orientation") item.orientation = val;
+      else if (field === "location") {
+        if (val.includes("·")) {
+          var parts = val.split("·");
+          item.date = parts[0].trim();
+          item.location = parts[1].trim();
+        } else {
+          item.location = val;
+        }
+      }
+      saveAllChanges();
+    }
+
+    function renderEnquiries() {
+      var tbody = document.getElementById("enquiriesTableBody");
+      var enquiries = currentData.enquiries || [];
+      var searchInput = document.getElementById("enquirySearch");
+      var q = searchInput ? searchInput.value.toLowerCase().trim() : "";
+
+      var filtered = enquiries.map((enq, idx) => ({ enq: enq, originalIndex: idx })).filter(item => {
+        var e = item.enq;
+        if (activeEnquiryFilter !== "ALL" && e.status !== activeEnquiryFilter) return false;
+        if (q) {
+          var haystack = (e.name + " " + e.email + " " + e.phone + " " + e.dateCity + " " + e.eventType + " " + e.message).toLowerCase();
+          if (haystack.indexOf(q) === -1) return false;
+        }
+        return true;
+      });
+
+      if (!filtered.length) {
+        tbody.innerHTML = `<tr><td colspan="7" style="text-align:center; color:var(--ash); padding:24px;">No matching enquiries found.</td></tr>`;
+        return;
+      }
+      tbody.innerHTML = filtered.map(item => {
+        var enq = item.enq;
+        var idx = item.originalIndex;
+        var statusBadge = enq.status === "New" ? "badge-new" : (enq.status === "Contacted" ? "badge-contacted" : "badge-confirmed");
+        var waPhone = (enq.phone || "").replace(/[^0-9]/g, "");
+        var waMsg = encodeURIComponent("Hi " + (enq.name || "there") + ", thank you for reaching out to SHOONYA! Regarding your " + (enq.eventType || "experience") + " enquiry...");
+        return `
+          <tr>
+            <td><strong>${enq.id}</strong><br><span style="font-size:10px; color:var(--ash);">${(enq.createdAt || "").slice(0, 10)}</span></td>
+            <td><strong>${enq.name}</strong></td>
+            <td>${enq.email || ""}<br><span style="color:var(--magenta);">${enq.phone || ""}</span></td>
+            <td><span class="badge badge-confirmed">${enq.intent || "Booking"}</span><br><span style="font-size:11px;">${enq.eventType || ""}</span></td>
+            <td>${enq.guests || ""}<br><span style="font-size:11px; color:var(--ash);">${enq.dateCity || ""}</span></td>
+            <td><span class="badge ${statusBadge}">${enq.status || "New"}</span></td>
+            <td>
+              <div style="display:flex; gap:6px;">
+                <button onclick="openEnquiryDetail(${idx})" class="btn btn-sm btn-ghost" title="View Full Enquiry">View</button>
+                ${waPhone ? `<a href="https://wa.me/${waPhone}?text=${waMsg}" target="_blank" class="btn btn-sm" style="background:#25D366; color:#fff; text-decoration:none; font-weight:700;">WhatsApp</a>` : ""}
+                <button onclick="toggleEnquiryStatus(${idx})" class="btn btn-sm btn-ghost" title="Cycle Status">Status</button>
+                <button onclick="deleteEnquiry(${idx})" class="btn btn-sm btn-danger">×</button>
+              </div>
+            </td>
+          </tr>
+        `;
+      }).join("");
+    }
+
+    function toggleEnquiryStatus(idx) {
+      var enq = currentData.enquiries[idx];
+      if (!enq) return;
+      if (enq.status === "New") enq.status = "Contacted";
+      else if (enq.status === "Contacted") enq.status = "Confirmed";
+      else enq.status = "New";
+      renderEnquiries();
+      saveAllChanges();
+    }
+
+    function deleteEnquiry(idx) {
+      if (confirm("Delete this enquiry?")) {
+        currentData.enquiries.splice(idx, 1);
+        renderEnquiries();
+        saveAllChanges();
+      }
+    }
+
+    function deleteEvent(idx) {
+      if (confirm("Delete this event?")) {
+        currentData.events.splice(idx, 1);
+        renderEvents();
+        saveAllChanges();
+      }
+    }
+
+    function deleteGalleryItem(idx) {
+      currentData.gallery.splice(idx, 1);
+      renderGallery();
+      saveAllChanges();
+    }
+
+    function addGalleryImagePrompt() {
+      var url = prompt("Enter image URL or path (e.g. /uploads/left.jpg or /images/...):");
+      if (url && url.trim()) {
+        currentData.gallery = currentData.gallery || [];
+        currentData.gallery.push({
+          id: "frame-" + Date.now(),
+          src: url.trim(),
+          caption: "Event Archive Frame #" + (currentData.gallery.length + 1),
+          orientation: "landscape",
+          date: "November 2026",
+          location: "SHUNYA Venue",
+          credit: "SHUNYA Production Archive"
+        });
+        renderGallery();
+        saveAllChanges();
+      }
+    }
+
+
+    
+    async function uploadArchImage(input, side) {
+      if (!input.files || !input.files[0]) return;
+      var file = input.files[0];
+      var reader = new FileReader();
+      reader.onload = async function(e) {
+        var base64 = e.target.result;
+        var filename = (side === "left" ? "left_" : "right_") + Date.now() + "_" + file.name.replace(/[^a-zA-Z0-9._-]/g, "_");
+        showToast("Uploading arch image...");
+        try {
+          var res = await fetch("/api/upload", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ filename: filename, base64: base64 })
+          });
+          var data = await res.json();
+          if (data.ok) {
+            if (side === "left") {
+              document.getElementById("archLeft").value = data.url;
+              previewLeftArch(data.url);
+            } else {
+              document.getElementById("archRight").value = data.url;
+              previewRightArch(data.url);
+            }
+            await saveAllChanges();
+            showToast("Arch image uploaded and saved!");
+          } else {
+            alert("Upload error: " + (data.error || "Upload failed"));
+          }
+        } catch(err) {
+          alert("Upload error: " + err.message);
+        }
+      };
+      reader.readAsDataURL(file);
+    }
+
+    async function uploadGalleryImage(input) {
+      if (!input.files || !input.files.length) return;
+      showToast("Uploading " + input.files.length + " image(s)...");
+      for (var i = 0; i < input.files.length; i++) {
+        var file = input.files[i];
+        await new Promise(function(resolve) {
+          var reader = new FileReader();
+          reader.onload = async function(e) {
+            var base64 = e.target.result;
+            var filename = "gallery_" + Date.now() + "_" + file.name.replace(/[^a-zA-Z0-9._-]/g, "_");
+            try {
+              var res = await fetch("/api/upload", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ filename: filename, base64: base64 })
+              });
+              var data = await res.json();
+              if (data.ok) {
+                currentData.gallery = currentData.gallery || [];
+                currentData.gallery.push({
+                  id: "frame-" + Date.now() + "_" + i,
+                  src: data.url,
+                  caption: file.name.replace(/\.[^/.]+$/, "").replace(/[-_]/g, " ") || "Uploaded Frame",
+                  orientation: "landscape",
+                  date: "November 2026",
+                  location: "SHUNYA Venue",
+                  credit: "SHUNYA Production Archive"
+                });
+              }
+            } catch(err) {
+              console.error("Gallery upload error:", err);
+            }
+            resolve();
+          };
+          reader.readAsDataURL(file);
+        });
+      }
+      renderGallery();
+      await saveAllChanges();
+      showToast("Gallery updated and saved!");
+    }
+
+    async function saveAllChanges() {
+      if (!currentData) return;
+      // Gather inputs
+      currentData.brand = currentData.brand || {};
+      currentData.brand.name = document.getElementById("brandName").value.trim();
+      currentData.brand.legalName = document.getElementById("legalName").value.trim();
+      currentData.brand.tagline = document.getElementById("brandTagline").value.trim();
+      currentData.brand.contactEmail = document.getElementById("contactEmail").value.trim();
+      currentData.brand.contactPhone = document.getElementById("contactPhone").value.trim();
+      currentData.brand.whatsapp = document.getElementById("whatsappNumber").value.trim();
+      currentData.brand.instagram = document.getElementById("instagramUrl").value.trim();
+      currentData.brand.location = document.getElementById("locationTag").value.trim();
+
+      // Save Department Contact Routing
+      currentData.brand.contactRouting = currentData.brand.contactRouting || {};
+      if (document.getElementById("routePrivateBookings")) currentData.brand.contactRouting.privateBookings = document.getElementById("routePrivateBookings").value.trim();
+      if (document.getElementById("routeArtistCollaborations")) currentData.brand.contactRouting.artistCollaborations = document.getElementById("routeArtistCollaborations").value.trim();
+      if (document.getElementById("routeBrandPartnerships")) currentData.brand.contactRouting.brandPartnerships = document.getElementById("routeBrandPartnerships").value.trim();
+      if (document.getElementById("routeSponsorships")) currentData.brand.contactRouting.sponsorships = document.getElementById("routeSponsorships").value.trim();
+      if (document.getElementById("routeGeneral")) currentData.brand.contactRouting.general = document.getElementById("routeGeneral").value.trim();
+
+      currentData.hero = currentData.hero || {};
+      currentData.hero.headlinePrefix = document.getElementById("headlinePrefix").value;
+      currentData.hero.headlineHighlight = document.getElementById("headlineHighlight").value;
+      currentData.hero.kicker = document.getElementById("heroKicker").value;
+      currentData.hero.categories = document.getElementById("heroCategories").value.split(",").map(s => s.trim()).filter(Boolean);
+      currentData.hero.disciplines = document.getElementById("heroDisciplines").value.split(",").map(s => s.trim()).filter(Boolean);
+
+      currentData.arches = currentData.arches || {};
+      currentData.arches.left = document.getElementById("archLeft").value.trim();
+      currentData.arches.right = document.getElementById("archRight").value.trim();
+
+      try {
+        var res = await fetch("/api/site-data", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(currentData)
+        });
+        var result = await res.json();
+        if (result.ok) {
+          showToast("Changes successfully saved to live store!");
+          renderDashboard();
+        }
+      } catch (err) {
+        alert("Failed to save: " + err.message);
+      }
+    }
+
+    // --- Authentication Gate Logic ---
+    async function handleAdminLogin(e) {
+      e.preventDefault();
+      var pass = document.getElementById("gatePasswordInput").value.trim();
+      var errBox = document.getElementById("gateErrorMsg");
+      var btn = document.getElementById("gateSubmitBtn");
+      errBox.style.display = "none";
+      btn.disabled = true;
+      btn.innerText = "Verifying...";
+      try {
+        var res = await fetch("/api/admin/auth", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ password: pass })
+        });
+        var data = await res.json();
+        if (data.ok) {
+          sessionStorage.setItem("shunya_admin_token", data.token);
+          document.getElementById("adminAuthGate").style.display = "none";
+          loadData();
+        } else {
+          errBox.style.display = "block";
+          errBox.innerText = data.error || "Incorrect password";
+        }
+      } catch(err) {
+        errBox.style.display = "block";
+        errBox.innerText = "Authentication error: " + err.message;
+      } finally {
+        btn.disabled = false;
+        btn.innerText = "Authenticate & Enter →";
+      }
+    }
+
+    function adminLogout() {
+      sessionStorage.removeItem("shunya_admin_token");
+      document.getElementById("adminAuthGate").style.display = "flex";
+      document.getElementById("gatePasswordInput").value = "";
+      document.getElementById("gateErrorMsg").style.display = "none";
+    }
+
+    function checkAdminAuth() {
+      var token = sessionStorage.getItem("shunya_admin_token");
+      if (token) {
+        document.getElementById("adminAuthGate").style.display = "none";
+        loadData();
+      } else {
+        document.getElementById("adminAuthGate").style.display = "flex";
+        setTimeout(() => {
+          var inp = document.getElementById("gatePasswordInput");
+          if (inp) inp.focus();
+        }, 100);
+      }
+    }
+
+    // --- Enquiry Detail Modal ---
+    function openEnquiryDetail(idx) {
+      var enq = currentData.enquiries[idx];
+      if (!enq) return;
+      document.getElementById("enqDetRef").innerText = enq.id;
+      document.getElementById("enqDetDate").innerText = (enq.createdAt || "").replace("T", " · ").slice(0, 18);
+      document.getElementById("enqDetRoute").innerText = enq.route || enq.intent || "General";
+      document.getElementById("enqDetName").innerText = enq.name || "N/A";
+      document.getElementById("enqDetEmail").innerText = enq.email || "N/A";
+      document.getElementById("enqDetPhone").innerText = enq.phone || "N/A";
+      document.getElementById("enqDetType").innerText = enq.eventType || "N/A";
+      document.getElementById("enqDetCity").innerText = enq.dateCity || "N/A";
+      document.getElementById("enqDetGuests").innerText = enq.guests || "N/A";
+      document.getElementById("enqDetBudget").innerText = enq.budgetRange || "N/A";
+      document.getElementById("enqDetMsg").innerText = enq.message || "No message body.";
+
+      var waPhone = (enq.phone || "").replace(/[^0-9]/g, "");
+      var waBtn = document.getElementById("enqDetWaBtn");
+      if (waPhone) {
+        var msg = encodeURIComponent("Hi " + enq.name + "! Connecting with you from SHUNYA Studio regarding your enquiry #" + enq.id);
+        waBtn.href = "https://wa.me/" + waPhone + "?text=" + msg;
+        waBtn.style.display = "inline-flex";
+      } else {
+        waBtn.style.display = "none";
+      }
+
+      document.getElementById("adminEnquiryDetailModal").style.display = "flex";
+    }
+
+    function closeEnquiryDetail() {
+      document.getElementById("adminEnquiryDetailModal").style.display = "none";
+    }
+
+    window.onload = checkAdminAuth;
+  </script>
+
+  <!-- Comprehensive Event Editor Modal -->
+  <div id="adminEventModal" style="display:none; position:fixed; inset:0; z-index:9999; background:rgba(0,0,0,0.85); backdrop-filter:blur(10px); align-items:center; justify-content:center; padding:20px;">
+    <div style="background:#150522; border:1px solid var(--purple); border-radius:12px; max-width:680px; width:100%; padding:28px; box-shadow:0 20px 60px rgba(0,0,0,0.8); max-height:90vh; overflow-y:auto;">
+      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:18px;">
+        <h3 id="eventModalTitle" style="font-size:18px; font-weight:700; color:#fff;">Event Editor</h3>
+        <button onclick="closeEventModal()" class="btn btn-sm btn-ghost">&times;</button>
+      </div>
+      <input type="hidden" id="editEventIndex" value="-1" />
+      
+      <div class="form-row">
+        <div class="form-group">
+          <label class="form-label">Event Title *</label>
+          <input type="text" id="evTitle" class="form-input" placeholder="e.g. SHUNYA 03 — TBA" />
+        </div>
+        <div class="form-group">
+          <label class="form-label">URL Slug (e.g. /events/shunya-03-tba) *</label>
+          <input type="text" id="evSlug" class="form-input" placeholder="shunya-03-tba" />
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label class="form-label">Subtitle / Concept</label>
+          <input type="text" id="evSubtitle" class="form-input" placeholder="e.g. Warehouse Series / Edition 03" />
+        </div>
+        <div class="form-group">
+          <label class="form-label">Category</label>
+          <select id="evCategory" class="form-input">
+            <option value="Warehouse Series">Warehouse Series</option>
+            <option value="Open Air">Open Air Gathering</option>
+            <option value="Electronic Music">Electronic Music</option>
+            <option value="Private Experience">Private Experience</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label class="form-label">Date Display Label</label>
+          <input type="text" id="evDateLabel" class="form-input" placeholder="e.g. November 6, 2026 · 14:30 IST" />
+        </div>
+        <div class="form-group">
+          <label class="form-label">ISO Date (for Live Countdown)</label>
+          <input type="text" id="evDateIso" class="form-input" placeholder="2026-11-06T14:30:00.000Z" />
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label class="form-label">Venue</label>
+          <input type="text" id="evVenue" class="form-input" placeholder="e.g. Secret Warehouse Venue" />
+        </div>
+        <div class="form-group">
+          <label class="form-label">City</label>
+          <input type="text" id="evCity" class="form-input" placeholder="e.g. Mumbai, Goa" />
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label class="form-label">Ticket Price Display</label>
+          <input type="text" id="evTicketPrice" class="form-input" placeholder="₹1,500 onwards" />
+        </div>
+        <div class="form-group">
+          <label class="form-label">Ticket Booking URL</label>
+          <input type="url" id="evTicketUrl" class="form-input" placeholder="https://insider.in/..." />
+        </div>
+      </div>
+
+      <!-- Poster Upload & Preview -->
+      <div class="form-group">
+        <label class="form-label">Event Poster Image</label>
+        <div style="display:flex; gap:8px;">
+          <input type="text" id="evPoster" class="form-input" placeholder="/uploads/left.jpg" />
+          <input type="file" id="fileEvPoster" accept="image/*" style="display:none;" onchange="uploadEventPoster(this)" />
+          <button type="button" onclick="document.getElementById('fileEvPoster').click()" class="btn btn-ghost" style="white-space:nowrap;">Upload Poster</button>
+        </div>
+        <div style="margin-top:8px; display:flex; align-items:center; gap:12px;">
+          <img id="evPosterPreview" src="/uploads/left.jpg" style="width:50px; height:65px; object-fit:cover; border-radius:4px; border:1px solid rgba(175,0,241,0.3);" onerror="this.src='/uploads/left.jpg'" />
+          <span style="font-size:11px; color:var(--ash);">Poster preview (aspect ratio 4:5 recommended)</span>
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label class="form-label">RSVP &amp; Publication Status</label>
+          <select id="evStatus" class="form-input">
+            <option value="published">Published (Live & Guestlist Open)</option>
+            <option value="sold-out">Published (Sold Out)</option>
+            <option value="secret-rsvp">Published (Secret RSVP Only)</option>
+            <option value="draft">Draft (Unpublished / Hidden)</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Lineup (Artists / DJs)</label>
+          <input type="text" id="evLineup" class="form-input" placeholder="Headline DJ · Live Synth Support · Visuals" />
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">Short Description (for Listing Cards)</label>
+        <input type="text" id="evShortDesc" class="form-input" placeholder="One sentence summary of the session..." />
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">Full Concept Description (for Detail Page)</label>
+        <textarea id="evDesc" class="form-textarea" rows="3" placeholder="Describe the sonic atmosphere, acoustic setup, and narrative..."></textarea>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">Event FAQs (JSON array of { "q": "...", "a": "..." })</label>
+        <textarea id="evFaqs" class="form-textarea" rows="4" style="font-family:var(--font-mono); font-size:11px;"></textarea>
+      </div>
+
+      <div style="display:flex; justify-content:flex-end; gap:10px; margin-top:20px;">
+        <button onclick="closeEventModal()" class="btn btn-ghost">Cancel</button>
+        <button onclick="saveEventFromModal()" class="btn btn-primary">Save Event</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Enquiry Detail Modal -->
+  <div id="adminEnquiryDetailModal" style="display:none; position:fixed; inset:0; z-index:9999; background:rgba(0,0,0,0.85); backdrop-filter:blur(10px); align-items:center; justify-content:center; padding:20px;">
+    <div style="background:#150522; border:1px solid var(--purple); border-radius:12px; max-width:580px; width:100%; padding:28px; box-shadow:0 20px 60px rgba(0,0,0,0.8); max-height:90vh; overflow-y:auto;">
+      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:16px;">
+        <div>
+          <span style="font-family:var(--font-mono); font-size:11px; color:var(--magenta);">ENQUIRY INSPECTOR</span>
+          <h3 id="enqDetRef" style="font-size:20px; font-weight:700; color:#fff; margin:2px 0 0 0;">ENQ-XXXXXX</h3>
+        </div>
+        <button onclick="closeEnquiryDetail()" class="btn btn-sm btn-ghost">&times;</button>
+      </div>
+
+      <div style="display:grid; grid-template-columns:1fr 1fr; gap:12px; background:rgba(0,0,0,0.3); padding:16px; border-radius:8px; margin-bottom:18px; font-family:var(--font-mono); font-size:12px;">
+        <div><span style="color:var(--ash);">Date:</span> <span id="enqDetDate" style="color:#fff;"></span></div>
+        <div><span style="color:var(--ash);">Route:</span> <span id="enqDetRoute" style="color:var(--magenta);"></span></div>
+        <div><span style="color:var(--ash);">Client:</span> <span id="enqDetName" style="color:#fff; font-weight:700;"></span></div>
+        <div><span style="color:var(--ash);">Email:</span> <span id="enqDetEmail" style="color:#fff;"></span></div>
+        <div><span style="color:var(--ash);">Phone:</span> <span id="enqDetPhone" style="color:#00ffaa;"></span></div>
+        <div><span style="color:var(--ash);">Format:</span> <span id="enqDetType" style="color:#fff;"></span></div>
+        <div><span style="color:var(--ash);">Location:</span> <span id="enqDetCity" style="color:#fff;"></span></div>
+        <div><span style="color:var(--ash);">Guests:</span> <span id="enqDetGuests" style="color:#fff;"></span></div>
+        <div style="grid-column:1 / -1;"><span style="color:var(--ash);">Budget:</span> <span id="enqDetBudget" style="color:#00ffaa;"></span></div>
+      </div>
+
+      <div style="margin-bottom:20px;">
+        <label class="form-label">Client Message &amp; Vision</label>
+        <div id="enqDetMsg" style="background:#09020e; border:1px solid rgba(175,0,241,0.25); border-radius:8px; padding:14px; font-size:13px; line-height:1.6; color:#d6d0e0; white-space:pre-wrap;"></div>
+      </div>
+
+      <div style="display:flex; justify-content:space-between; align-items:center;">
+        <a id="enqDetWaBtn" href="#" target="_blank" class="btn btn-sm" style="background:#25D366; color:#fff; text-decoration:none;">Reply via WhatsApp ↗</a>
+        <button onclick="closeEnquiryDetail()" class="btn btn-ghost">Close</button>
+      </div>
+    </div>
+  </div>
+
+</body>
+</html>

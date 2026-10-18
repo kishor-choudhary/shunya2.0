@@ -1,0 +1,968 @@
+<!DOCTYPE html>
+<html lang="en" class="h-full antialiased">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Private Experiences // SHOONYA — Sound First, Built Not Booked</title>
+  <meta name="description" content="Bespoke private celebrations, birthdays, pool parties, sundowners and exclusive gatherings engineered with custom sound systems, architectural lighting and curated music." />
+  <link rel="canonical" href="https://www.shunya.example/private-experiences" />
+  
+  <!-- Open Graph / Twitter -->
+  <meta property="og:title" content="Private Experiences // SHOONYA" />
+  <meta property="og:description" content="Bespoke private parties, sundowners, pool parties and exclusive celebrations engineered with custom sound and architectural lighting." />
+  <meta property="og:url" content="https://www.shunya.example/private-experiences" />
+  <meta property="og:site_name" content="SHOONYA" />
+  <meta property="og:type" content="website" />
+  <meta name="twitter:card" content="summary_large_image" />
+
+  <!-- Google tag (gtag.js) GA4 Placeholder -->
+  <!-- <script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-XXXXXXXXXX');
+  </script> -->
+
+  <!-- Luxury Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Plus+Jakarta+Sans:ital,wght@0,300..800;1,300..800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+  
+  <!-- Base Next.js Production Stylesheet -->
+  <link rel="stylesheet" href="/_next/static/chunks/0_7-834d877pd.css" />
+
+  <style>
+    :root {
+      --font-firs: "Plus Jakarta Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif !important;
+      --font-mono: "JetBrains Mono", "Roboto Mono", ui-monospace, monospace !important;
+      --font-serif: "Instrument Serif", Georgia, serif !important;
+      --shunya-purple: #af00f1;
+      --shunya-magenta: #d900ff;
+      --shunya-bone: #f8f5ee;
+      --shunya-dark: #0b0210;
+      --color-signal: #af00f1;
+      --color-signal-2: #d900ff;
+    }
+    * { box-sizing: border-box; }
+    body {
+      background: #08030d;
+      color: #f8f5ee;
+      font-family: var(--font-firs);
+      margin: 0;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      background-image: 
+        radial-gradient(ellipse at 50% 12%, rgba(175, 0, 241, 0.15) 0%, transparent 60%),
+        linear-gradient(to right, rgba(248, 245, 238, 0.03) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(248, 245, 238, 0.03) 1px, transparent 1px);
+      background-size: 100% 100%, 72px 72px, 72px 72px;
+    }
+    a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible, textarea:focus-visible {
+      outline: 2px solid var(--shunya-magenta) !important;
+      outline-offset: 3px !important;
+    }
+    #shunyaScrollProgress {
+      position: fixed; top: 0; left: 0; height: 3px; width: 0%;
+      background: linear-gradient(90deg, var(--shunya-purple), var(--shunya-magenta), #00ffaa);
+      box-shadow: 0 0 12px var(--shunya-magenta); z-index: 999999;
+      pointer-events: none; transition: width 0.08s ease-out;
+    }
+    .shunya-hud-bar {
+      position: fixed; top: 24px; right: 28px; z-index: 50;
+      display: flex; align-items: center; gap: 12px; font-family: var(--font-mono);
+    }
+    .shunya-hud-pill {
+      background: rgba(20, 5, 30, 0.78); border: 1px solid rgba(175, 0, 241, 0.4);
+      color: #f8f5ee; padding: 8px 16px; font-size: 11px; text-transform: uppercase;
+      letter-spacing: 0.15em; border-radius: 9999px; cursor: pointer; backdrop-filter: blur(12px);
+      transition: all 0.25s; display: flex; align-items: center; gap: 8px; text-decoration: none;
+    }
+    .shunya-hud-pill:hover { border-color: var(--shunya-magenta); color: #fff; }
+    .shunya-wa-fab {
+      position: fixed; bottom: 28px; right: 28px; z-index: 60;
+      width: 52px; height: 52px; border-radius: 50%;
+      background: linear-gradient(135deg, #25D366, #128C7E);
+      border: 2px solid rgba(255, 255, 255, 0.3);
+      box-shadow: 0 8px 24px rgba(37, 211, 102, 0.4);
+      display: flex; align-items: center; justify-content: center;
+      transition: all 0.3s; text-decoration: none;
+    }
+    .shunya-wa-fab:hover { transform: scale(1.08); }
+    .shunya-wa-fab svg { width: 26px; height: 26px; fill: #ffffff; }
+
+    .shell {
+      width: 100%; max-width: 1320px; margin: 0 auto; padding: 0 24px;
+    }
+    @media (min-width: 768px) { .shell { padding: 0 48px; } }
+
+    /* Experience Card */
+    .exp-card {
+      background: rgba(16, 5, 24, 0.7);
+      border: 1px solid rgba(175, 0, 241, 0.25);
+      border-radius: 12px;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.35s, box-shadow 0.35s;
+    }
+    .exp-card:hover {
+      transform: translateY(-5px);
+      border-color: var(--shunya-magenta);
+      box-shadow: 0 16px 40px rgba(175, 0, 241, 0.25);
+    }
+    .exp-img-wrap {
+      position: relative;
+      height: 220px;
+      overflow: hidden;
+      background: #0d0214;
+    }
+    .exp-img {
+      width: 100%; height: 100%; object-fit: cover;
+      transition: transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .exp-card:hover .exp-img {
+      transform: scale(1.06);
+    }
+    .exp-body {
+      padding: 24px;
+      display: flex;
+      flex-direction: column;
+      flex: 1;
+    }
+
+    .badge {
+      display: inline-block; padding: 4px 10px; border-radius: 4px;
+      font-size: 10px; font-family: var(--font-mono); font-weight: 700;
+      text-transform: uppercase; letter-spacing: 0.1em;
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, var(--shunya-purple), var(--shunya-magenta));
+      color: #fff; border: none; padding: 12px 24px; border-radius: 6px;
+      font-weight: 600; font-size: 12px; cursor: pointer; text-decoration: none;
+      display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+      transition: all 0.2s; box-shadow: 0 4px 16px rgba(175, 0, 241, 0.35);
+      font-family: var(--font-mono); text-transform: uppercase; letter-spacing: 0.1em;
+    }
+    .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 6px 24px rgba(217, 0, 255, 0.55); }
+    .btn-ghost {
+      background: rgba(255, 255, 255, 0.06); border: 1px solid rgba(255, 255, 255, 0.15);
+      color: #f8f5ee; padding: 10px 18px; border-radius: 6px; font-size: 12px;
+      cursor: pointer; text-decoration: none; display: inline-flex; align-items: center; gap: 6px;
+      transition: all 0.2s; font-family: var(--font-mono);
+    }
+    .btn-ghost:hover { background: rgba(255, 255, 255, 0.12); border-color: rgba(255, 255, 255, 0.3); color: #fff; }
+
+    /* Form Inputs */
+    .form-input, .form-select, .form-textarea {
+      width: 100%;
+      background: #09020e;
+      border: 1px solid rgba(175, 0, 241, 0.35);
+      color: #fff;
+      padding: 12px 16px;
+      border-radius: 8px;
+      font-family: var(--font-firs);
+      font-size: 14px;
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+    .form-input:focus, .form-select:focus, .form-textarea:focus {
+      border-color: var(--shunya-magenta);
+      box-shadow: 0 0 14px rgba(217, 0, 255, 0.3);
+    }
+    .form-label {
+      display: block;
+      font-family: var(--font-mono);
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: #c8c1d4;
+      margin-bottom: 6px;
+    }
+
+    /* Modal */
+    .shunya-modal-backdrop {
+      position: fixed; inset: 0; z-index: 99999;
+      background: rgba(0, 0, 0, 0.88); backdrop-filter: blur(14px);
+      display: none; align-items: center; justify-content: center; padding: 20px;
+    }
+    .shunya-modal-card {
+      background: #110319; border: 1px solid rgba(175, 0, 241, 0.4);
+      border-radius: 14px; max-width: 580px; width: 100%; padding: 32px;
+      box-shadow: 0 25px 70px rgba(0, 0, 0, 0.8); position: relative; max-height: 90vh; overflow-y: auto;
+    }
+    .shunya-modal-close {
+      position: absolute; top: 20px; right: 20px; background: transparent;
+      border: none; color: #fff; font-size: 26px; cursor: pointer; line-height: 1;
+    }
+  
+    /* Unified Navigation Header & Full-Width Tabs */
+    .shunya-hud-bar { display: none !important; }
+    .header-inner-row {
+      display: grid;
+      grid-template-columns: 1fr auto 1fr;
+      align-items: center;
+      padding: 18px 24px;
+      width: 100%;
+      box-sizing: border-box;
+    }
+    @media (min-width: 768px) {
+      .header-inner-row { padding: 20px 40px; }
+    }
+    @media (min-width: 1280px) {
+      .header-inner-row { padding: 22px 56px; }
+    }
+    .tab-link {
+      color: var(--shunya-bone, #f8f5ee);
+      text-decoration: none;
+      font-weight: 500;
+      position: relative;
+      transition: color 0.25s ease;
+      white-space: nowrap;
+    }
+    .tab-link:hover {
+      color: var(--shunya-magenta, #d900ff);
+    }
+    .tab-link.active {
+      color: var(--shunya-magenta, #d900ff) !important;
+      font-weight: 700;
+    }
+    .tab-link.active::after {
+      content: "";
+      position: absolute;
+      bottom: -4px;
+      left: 0;
+      right: 0;
+      height: 2px;
+      background: var(--shunya-magenta, #d900ff);
+      box-shadow: 0 0 8px var(--shunya-magenta, #d900ff);
+      border-radius: 1px;
+    }
+    .tab-cta-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 8px 20px;
+      border-radius: 9999px;
+      background: linear-gradient(135deg, var(--shunya-magenta, #d900ff), #7700a6);
+      color: #ffffff !important;
+      font-family: var(--font-mono, monospace);
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.15em;
+      font-weight: 600;
+      border: none;
+      cursor: pointer;
+      text-decoration: none;
+      transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+      box-shadow: 0 4px 16px rgba(175, 0, 241, 0.35);
+      white-space: nowrap;
+    }
+    .tab-cta-btn:hover {
+      transform: translateY(-1px) scale(1.02);
+      box-shadow: 0 6px 24px rgba(217, 0, 255, 0.6);
+      background: linear-gradient(135deg, #f033ff, var(--shunya-magenta, #d900ff));
+    }
+    .shunya-audio-fab {
+      position: fixed;
+      bottom: 28px;
+      left: 28px;
+      z-index: 60;
+      background: rgba(18, 5, 28, 0.82);
+      border: 1px solid rgba(175, 0, 241, 0.4);
+      color: var(--shunya-bone, #f8f5ee);
+      padding: 8px 16px;
+      font-size: 11px;
+      font-family: var(--font-mono, monospace);
+      text-transform: uppercase;
+      letter-spacing: 0.15em;
+      border-radius: 9999px;
+      cursor: pointer;
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.6);
+      text-decoration: none;
+    }
+    .shunya-audio-fab:hover {
+      border-color: var(--shunya-magenta, #d900ff);
+      background: rgba(175, 0, 241, 0.2);
+      color: #fff;
+      transform: translateY(-2px);
+      box-shadow: 0 10px 28px rgba(175, 0, 241, 0.45);
+    }
+
+  </style>
+
+  <script>
+    window.SHUNYA_DATA = null;
+    try {
+      var xhr = new XMLHttpRequest();
+      xhr.open("GET", "/api/site-data", false);
+      xhr.send(null);
+      if (xhr.status === 200) window.SHUNYA_DATA = JSON.parse(xhr.responseText);
+    } catch(e) {}
+  </script>
+</head>
+<body>
+
+  <!-- Top Progress Bar -->
+  <div id="shunyaScrollProgress" aria-hidden="true"></div>
+
+    <!-- Floating Atmospheric Audio Pill (Bottom Left) -->
+  <button id="shunyaSoundToggle" class="shunya-audio-fab" onclick="shunyaToggleAudio()" title="Toggle Atmospheric Audio" aria-label="Toggle Atmospheric Audio">
+    <span id="shunyaSoundDot" style="display:inline-block; width:6px; height:6px; border-radius:50%; background:#888;"></span>
+    <span id="shunyaSoundLabel">Audio: OFF</span>
+  </button>
+
+  <!-- Main Site Header -->
+  <header style="position:sticky; top:0; z-index:40; background:rgba(8, 3, 13, 0.88); backdrop-filter:blur(16px); -webkit-backdrop-filter:blur(16px); border-bottom:1px solid rgba(248, 245, 238, 0.08); width:100%;">
+    <div class="header-inner-row">
+      <a href="/" aria-label="SHOONYA — home" style="color:var(--shunya-bone); display:inline-flex; align-items:center; gap:10px; text-decoration:none; justify-self:start;">
+        <svg viewBox="0 0 64 64" fill="currentColor" style="height:32px; width:auto; overflow:visible;">
+          <circle cx="32" cy="32" r="30" fill="rgba(175, 0, 241, 0.15)" stroke="rgba(175, 0, 241, 0.4)" stroke-width="1.5"></circle>
+          <path d="M44.8 15.4C35.8 6.4 12.9 12.6 17.7 20.6s21.9 11.6 28.6 22.8c4.8 8-18.1 14.2-27.1 5.2" fill="none" stroke="currentColor" stroke-width="6.5" stroke-linecap="round"></path>
+        </svg>
+      </a>
+
+      <a href="/" style="font-family:var(--font-mono); font-size:15px; font-weight:700; text-transform:uppercase; letter-spacing:0.5em; color:var(--shunya-magenta); text-decoration:none; justify-self:center; white-space:nowrap;">
+        SHOONYA
+      </a>
+
+      <nav aria-label="Primary" style="display:none; justify-self:end; align-items:center; gap:28px; font-family:var(--font-mono); font-size:10px; text-transform:uppercase; letter-spacing:0.25em;" class="md-nav">
+        <a href="/events" onclick="window.location.assign('/events'); return false;" class="tab-link">Events</a>
+        <a href="/private-experiences" onclick="window.location.assign('/private-experiences'); return false;" class="tab-link active">Private Experiences</a>
+        <a href="/about" onclick="window.location.assign('/about'); return false;" class="tab-link">About</a>
+        <a href="/gallery" onclick="window.location.assign('/gallery'); return false;" class="tab-link">Gallery</a>
+        <a href="/contact" onclick="window.location.assign('/contact'); return false;" class="tab-link">Contact</a>
+        <button type="button" onclick="openQuickTalk()" class="tab-cta-btn">Let's talk</button>
+      </nav>
+
+      <button type="button" onclick="toggleMobileNav()" aria-label="Toggle navigation" class="md-hidden" style="justify-self:end; background:none; border:none; color:#fff; cursor:pointer; padding:6px;">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 6h16M4 12h16M4 18h16"/></svg>
+      </button>
+    </div>
+  </header>
+
+  <!-- Mobile Drawer -->
+  <div id="mobileDrawer" style="display:none; position:fixed; inset:0; z-index:90; background:#0a0312; flex-direction:column; justify-content:space-between; padding:32px 28px;">
+    <div style="display:flex; justify-content:space-between; align-items:center;">
+      <span style="font-family:var(--font-mono); font-size:14px; letter-spacing:0.3em; color:var(--shunya-magenta);">SHOONYA</span>
+      <button onclick="toggleMobileNav()" style="background:none; border:none; color:#fff; font-size:28px; cursor:pointer;">&times;</button>
+    </div>
+    <nav style="display:flex; flex-direction:column; gap:20px; margin:40px 0;">
+      <a href="/events" onclick="window.location.assign('/events'); return false;" style="font-size:32px; font-weight:700; color:#fff; text-decoration:none;">Events</a>
+      <a href="/private-experiences" onclick="window.location.assign('/private-experiences'); return false;" style="font-size:32px; font-weight:700; color:var(--shunya-magenta); text-decoration:none;">Private Experiences</a>
+      <a href="/about" onclick="window.location.assign('/about'); return false;" style="font-size:32px; font-weight:700; color:#fff; text-decoration:none;">About</a>
+      <a href="/gallery" onclick="window.location.assign('/gallery'); return false;" style="font-size:32px; font-weight:700; color:#fff; text-decoration:none;">Gallery</a>
+      <a href="/contact" onclick="window.location.assign('/contact'); return false;" style="font-size:32px; font-weight:700; color:#fff; text-decoration:none;">Contact</a>
+      <button onclick="toggleMobileNav(); openQuickTalk();" class="btn-primary" style="margin-top:16px; padding:14px; font-size:14px; justify-content:center;">Let's talk</button>
+    </nav>
+    <div style="font-family:var(--font-mono); font-size:11px; color:#8c8599; line-height:1.6;">
+      From Shoonya, Everything Begins<br>
+      Independent Event & Electronic Music Experiences
+    </div>
+  </div>
+
+  <!-- Hero Banner -->
+  <section class="shell" style="padding-top:64px; padding-bottom:48px;">
+    <div style="max-width:840px;">
+      <div style="font-family:var(--font-mono); font-size:12px; color:var(--shunya-magenta); text-transform:uppercase; letter-spacing:0.3em; margin-bottom:12px;">
+        Bespoke Production // Discretion & Sound
+      </div>
+      <h1 style="font-size:clamp(36px, 5.5vw, 64px); font-weight:800; line-height:1.08; margin:0 0 20px 0; letter-spacing:-0.02em; color:#fff;">
+        Private Experiences <span style="font-family:var(--font-serif); font-style:italic; font-weight:400; color:#e099ff;">&amp; Bespoke Nights.</span>
+      </h1>
+      <p style="font-size:clamp(15px, 2vw, 18px); color:#cbc4d6; line-height:1.65; margin:0 0 32px 0;">
+        From private estates and warehouse takeovers to milestone celebrations and coastal sundowners. We engineer complete environments — calibrated sound reinforcement, architectural lighting, curated musical progression, and strict discretion.
+      </p>
+      <div style="display:flex; flex-wrap:wrap; gap:14px;">
+        <a href="#bookingFormSection" class="btn-primary">Book an Experience ↓</a>
+        <a href="https://wa.me/910000000000?text=Hi%20SHUNYA!%20I'd%20like%20to%20enquire%20about%20booking%20a%20private%20experience." target="_blank" class="btn-ghost" style="border-color:#25D366; color:#25D366;">
+          Chat on WhatsApp ↗
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- 6 Experiences Cards Grid -->
+  <section class="shell" style="padding-bottom:64px;">
+    <div style="display:flex; justify-content:space-between; align-items:baseline; margin-bottom:32px; border-bottom:1px solid rgba(175,0,241,0.2); padding-bottom:16px;">
+      <div>
+        <h2 style="font-size:24px; font-weight:700; margin:0; color:#fff;">Curated Formats</h2>
+        <div style="font-family:var(--font-mono); font-size:11px; color:#8d839c; text-transform:uppercase; letter-spacing:0.15em; margin-top:4px;">
+          Six specialized formats, engineered end-to-end
+        </div>
+      </div>
+      <span style="font-family:var(--font-mono); font-size:11px; color:var(--shunya-magenta);">[01 — 06]</span>
+    </div>
+
+    <div style="display:grid; grid-template-columns:repeat(auto-fill, minmax(340px, 1fr)); gap:28px;">
+      
+      <!-- 1. Private Parties -->
+      <article class="exp-card">
+        <div class="exp-img-wrap">
+          <img src="/uploads/left.jpg" alt="Private Parties" class="exp-img" loading="lazy" />
+          <div style="position:absolute; inset:0; background:linear-gradient(to top, rgba(16,5,24,0.95) 0%, transparent 60%);"></div>
+          <span class="badge" style="position:absolute; top:16px; left:16px; background:rgba(0,0,0,0.6); border:1px solid rgba(255,255,255,0.2); color:#fff;">Format 01</span>
+        </div>
+        <div class="exp-body">
+          <div style="font-family:var(--font-mono); font-size:11px; color:var(--shunya-magenta); margin-bottom:6px;">Intimate & Bespoke Sound</div>
+          <h3 style="font-size:22px; font-weight:700; margin:0 0 10px 0; color:#fff;">Private Parties</h3>
+          <p style="font-size:14px; color:#c6bed2; line-height:1.6; margin:0 0 20px 0; flex:1;">
+            Custom celebrations built as a complete night: narrative concept, tuned point-source or line-array sound, bespoke lighting, and an uncompromised guest journey.
+          </p>
+          <button onclick="selectExperience('Private Parties')" class="btn-ghost" style="width:100%; justify-content:center; font-size:11px;">
+            Book This Format ↓
+          </button>
+        </div>
+      </article>
+
+      <!-- 2. Birthdays -->
+      <article class="exp-card">
+        <div class="exp-img-wrap">
+          <img src="/uploads/frames/ezgif-frame-005.jpg" alt="Birthdays" class="exp-img" loading="lazy" onerror="this.src='/uploads/left.jpg'" />
+          <div style="position:absolute; inset:0; background:linear-gradient(to top, rgba(16,5,24,0.95) 0%, transparent 60%);"></div>
+          <span class="badge" style="position:absolute; top:16px; left:16px; background:rgba(0,0,0,0.6); border:1px solid rgba(255,255,255,0.2); color:#fff;">Format 02</span>
+        </div>
+        <div class="exp-body">
+          <div style="font-family:var(--font-mono); font-size:11px; color:var(--shunya-magenta); margin-bottom:6px;">Milestone Celebrations</div>
+          <h3 style="font-size:22px; font-weight:700; margin:0 0 10px 0; color:#fff;">Birthdays</h3>
+          <p style="font-size:14px; color:#c6bed2; line-height:1.6; margin:0 0 20px 0; flex:1;">
+            Milestone birthdays with custom DJ lineups, curated cocktail programming, atmospheric scenography, and high-energy electronic sound that transforms any venue.
+          </p>
+          <button onclick="selectExperience('Birthdays')" class="btn-ghost" style="width:100%; justify-content:center; font-size:11px;">
+            Book This Format ↓
+          </button>
+        </div>
+      </article>
+
+      <!-- 3. Pool Parties -->
+      <article class="exp-card">
+        <div class="exp-img-wrap">
+          <img src="/uploads/frames/ezgif-frame-012.jpg" alt="Pool Parties" class="exp-img" loading="lazy" onerror="this.src='/uploads/left.jpg'" />
+          <div style="position:absolute; inset:0; background:linear-gradient(to top, rgba(16,5,24,0.95) 0%, transparent 60%);"></div>
+          <span class="badge" style="position:absolute; top:16px; left:16px; background:rgba(0,0,0,0.6); border:1px solid rgba(255,255,255,0.2); color:#fff;">Format 03</span>
+        </div>
+        <div class="exp-body">
+          <div style="font-family:var(--font-mono); font-size:11px; color:var(--shunya-magenta); margin-bottom:6px;">Daylight into Dusk</div>
+          <h3 style="font-size:22px; font-weight:700; margin:0 0 10px 0; color:#fff;">Pool Parties</h3>
+          <p style="font-size:14px; color:#c6bed2; line-height:1.6; margin:0 0 20px 0; flex:1;">
+            Sound engineered specifically for open air, water reflections, and outdoor acoustics. Seamless day-to-night progression with tropical & underground groove curation.
+          </p>
+          <button onclick="selectExperience('Pool Parties')" class="btn-ghost" style="width:100%; justify-content:center; font-size:11px;">
+            Book This Format ↓
+          </button>
+        </div>
+      </article>
+
+      <!-- 4. Sundowners -->
+      <article class="exp-card">
+        <div class="exp-img-wrap">
+          <img src="/uploads/right.jpg" alt="Sundowners" class="exp-img" loading="lazy" />
+          <div style="position:absolute; inset:0; background:linear-gradient(to top, rgba(16,5,24,0.95) 0%, transparent 60%);"></div>
+          <span class="badge" style="position:absolute; top:16px; left:16px; background:rgba(0,0,0,0.6); border:1px solid rgba(255,255,255,0.2); color:#fff;">Format 04</span>
+        </div>
+        <div class="exp-body">
+          <div style="font-family:var(--font-mono); font-size:11px; color:var(--shunya-magenta); margin-bottom:6px;">Golden Hour Progression</div>
+          <h3 style="font-size:22px; font-weight:700; margin:0 0 10px 0; color:#fff;">Sundowners</h3>
+          <p style="font-size:14px; color:#c6bed2; line-height:1.6; margin:0 0 20px 0; flex:1;">
+            Golden-hour gatherings with a patient musical progression, considered bar flow, and sunset light design that seamlessly shifts as darkness envelops the space.
+          </p>
+          <button onclick="selectExperience('Sundowners')" class="btn-ghost" style="width:100%; justify-content:center; font-size:11px;">
+            Book This Format ↓
+          </button>
+        </div>
+      </article>
+
+      <!-- 5. Theme Parties -->
+      <article class="exp-card">
+        <div class="exp-img-wrap">
+          <img src="/uploads/frames/ezgif-frame-025.jpg" alt="Theme Parties" class="exp-img" loading="lazy" onerror="this.src='/uploads/right.jpg'" />
+          <div style="position:absolute; inset:0; background:linear-gradient(to top, rgba(16,5,24,0.95) 0%, transparent 60%);"></div>
+          <span class="badge" style="position:absolute; top:16px; left:16px; background:rgba(0,0,0,0.6); border:1px solid rgba(255,255,255,0.2); color:#fff;">Format 05</span>
+        </div>
+        <div class="exp-body">
+          <div style="font-family:var(--font-mono); font-size:11px; color:var(--shunya-magenta); margin-bottom:6px;">Art Direction & Scenography</div>
+          <h3 style="font-size:22px; font-weight:700; margin:0 0 10px 0; color:#fff;">Theme Parties</h3>
+          <p style="font-size:14px; color:#c6bed2; line-height:1.6; margin:0 0 20px 0; flex:1;">
+            From invitation design to the final spotlight: comprehensive artistic direction, custom set pieces, kinetic lighting, and performers that uphold an uncompromising vision.
+          </p>
+          <button onclick="selectExperience('Theme Parties')" class="btn-ghost" style="width:100%; justify-content:center; font-size:11px;">
+            Book This Format ↓
+          </button>
+        </div>
+      </article>
+
+      <!-- 6. Exclusive Celebrations -->
+      <article class="exp-card">
+        <div class="exp-img-wrap">
+          <img src="/uploads/frames/ezgif-frame-039.jpg" alt="Exclusive Celebrations" class="exp-img" loading="lazy" onerror="this.src='/uploads/left.jpg'" />
+          <div style="position:absolute; inset:0; background:linear-gradient(to top, rgba(16,5,24,0.95) 0%, transparent 60%);"></div>
+          <span class="badge" style="position:absolute; top:16px; left:16px; background:rgba(0,0,0,0.6); border:1px solid rgba(255,255,255,0.2); color:#fff;">Format 06</span>
+        </div>
+        <div class="exp-body">
+          <div style="font-family:var(--font-mono); font-size:11px; color:var(--shunya-magenta); margin-bottom:6px;">Discretion & Confidentiality</div>
+          <h3 style="font-size:22px; font-weight:700; margin:0 0 10px 0; color:#fff;">Exclusive Celebrations</h3>
+          <p style="font-size:14px; color:#c6bed2; line-height:1.6; margin:0 0 20px 0; flex:1;">
+            Anniversaries, private retreats, and high-profile gatherings produced under strict non-disclosure agreements with private guest codes and secluded infrastructure.
+          </p>
+          <button onclick="selectExperience('Exclusive Celebrations')" class="btn-ghost" style="width:100%; justify-content:center; font-size:11px;">
+            Book This Format ↓
+          </button>
+        </div>
+      </article>
+
+    </div>
+  </section>
+
+  <!-- Production Capabilities Strip -->
+  <section class="shell" style="padding-bottom:64px;">
+    <div style="background:linear-gradient(135deg, rgba(22, 6, 35, 0.75), rgba(12, 3, 19, 0.85)); border:1px solid rgba(175, 0, 241, 0.28); border-radius:12px; padding:36px;">
+      <div style="font-family:var(--font-mono); font-size:11px; text-transform:uppercase; letter-spacing:0.2em; color:var(--shunya-magenta); margin-bottom:8px;">
+        The SHUNYA Standard
+      </div>
+      <h2 style="font-size:26px; font-weight:700; color:#fff; margin:0 0 24px 0;">What Every Production Includes</h2>
+      <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(220px, 1fr)); gap:24px;">
+        <div>
+          <div style="font-family:var(--font-mono); font-size:12px; font-weight:700; color:#00ffaa; margin-bottom:4px;">01. Acoustic Tuning</div>
+          <p style="font-size:13px; color:#bbb3c7; line-height:1.5; margin:0;">Precision speaker placement, acoustic simulation, and distortion-free sub bass tuning.</p>
+        </div>
+        <div>
+          <div style="font-family:var(--font-mono); font-size:12px; font-weight:700; color:#00ffaa; margin-bottom:4px;">02. Light & Scenography</div>
+          <p style="font-size:13px; color:#bbb3c7; line-height:1.5; margin:0;">Atmospheric haze, kinetic lighting fixtures, and custom architectural rigging.</p>
+        </div>
+        <div>
+          <div style="font-family:var(--font-mono); font-size:12px; font-weight:700; color:#00ffaa; margin-bottom:4px;">03. Lineup Curation</div>
+          <p style="font-size:13px; color:#bbb3c7; line-height:1.5; margin:0;">Curated electronic music artists matching your desired sonic narrative from sunset to late night.</p>
+        </div>
+        <div>
+          <div style="font-family:var(--font-mono); font-size:12px; font-weight:700; color:#00ffaa; margin-bottom:4px;">04. Absolute Discretion</div>
+          <p style="font-size:13px; color:#bbb3c7; line-height:1.5; margin:0;">Complete NDA compliance, discreet technical crews, and zero unauthorized photography.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Comprehensive Booking Form Section -->
+  <section id="bookingFormSection" class="shell" style="padding-bottom:96px;">
+    <div style="max-width:860px; margin:0 auto; background:rgba(18, 5, 28, 0.85); border:1px solid rgba(175, 0, 241, 0.35); border-radius:14px; padding:40px 32px; box-shadow:0 24px 60px rgba(0,0,0,0.7);">
+      
+      <div style="text-align:center; margin-bottom:36px;">
+        <div style="font-family:var(--font-mono); font-size:11px; text-transform:uppercase; letter-spacing:0.25em; color:var(--shunya-magenta); margin-bottom:8px;">
+          Direct Booking Inquiry
+        </div>
+        <h2 style="font-size:32px; font-weight:800; color:#fff; margin:0 0 10px 0;">
+          Reserve Your Private Experience
+        </h2>
+        <p style="font-size:14px; color:#aba2b7; max-width:540px; margin:0 auto; line-height:1.6;">
+          Fill out your requirements below. Our private bookings desk will review technical parameters and respond with a tailored proposal.
+        </p>
+      </div>
+
+      <!-- Live Success Message Banner -->
+      <div id="bookingSuccessBox" style="display:none; background:rgba(0, 255, 170, 0.12); border:1px solid #00ffaa; border-radius:8px; padding:24px; margin-bottom:32px; text-align:center;">
+        <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="#00ffaa" stroke-width="2" style="margin:0 auto 12px auto;"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+        <h3 style="font-size:20px; font-weight:700; color:#00ffaa; margin:0 0 6px 0;">Experience Inquiry Received</h3>
+        <p id="bookingSuccessMsg" style="font-size:14px; color:#d6ffee; margin:0 0 16px 0; line-height:1.6;"></p>
+        <div style="display:flex; justify-content:center; gap:12px;">
+          <a id="successWaBtn" href="#" target="_blank" class="btn-primary" style="background:#25D366; font-size:12px;">
+            Follow Up on WhatsApp ↗
+          </a>
+          <button onclick="resetBookingForm()" class="btn-ghost" style="font-size:12px;">
+            Submit Another Inquiry
+          </button>
+        </div>
+      </div>
+
+      <!-- Booking Form -->
+      <form id="privateBookingForm" onsubmit="handleBookingSubmit(event)">
+        <!-- Anti-spam Honeypot -->
+        <input type="text" name="shunya_hp" id="bookingHp" style="display:none !important;" tabindex="-1" autocomplete="off" />
+        
+        <div style="display:grid; grid-template-columns:1fr; gap:20px;" class="form-2col">
+          <div>
+            <label class="form-label">Full Name *</label>
+            <input type="text" id="bkName" class="form-input" required placeholder="Name (e.g. Host Name)" />
+          </div>
+          <div>
+            <label class="form-label">Phone Number *</label>
+            <input type="tel" id="bkPhone" class="form-input" required placeholder="+91 XXXXX XXXXX" />
+          </div>
+        </div>
+
+        <div style="display:grid; grid-template-columns:1fr; gap:20px; margin-top:20px;" class="form-2col">
+          <div>
+            <label class="form-label">Email Address *</label>
+            <input type="email" id="bkEmail" class="form-input" required placeholder="host@example.com" />
+          </div>
+          <div>
+            <label class="form-label">Experience Format *</label>
+            <select id="bkType" class="form-select" required>
+              <option value="Private Parties">Private Parties</option>
+              <option value="Birthdays">Birthdays</option>
+              <option value="Pool Parties">Pool Parties</option>
+              <option value="Sundowners">Sundowners</option>
+              <option value="Theme Parties">Theme Parties</option>
+              <option value="Exclusive Celebrations">Exclusive Celebrations</option>
+              <option value="Custom Bespoke Night">Custom Bespoke Night</option>
+            </select>
+          </div>
+        </div>
+
+        <div style="display:grid; grid-template-columns:1fr; gap:20px; margin-top:20px;" class="form-3col">
+          <div>
+            <label class="form-label">Target Date *</label>
+            <input type="date" id="bkDate" class="form-input" required />
+          </div>
+          <div>
+            <label class="form-label">Location / City *</label>
+            <input type="text" id="bkLocation" class="form-input" required placeholder="City or Venue (e.g. Mumbai, Goa)" />
+          </div>
+          <div>
+            <label class="form-label">Guest Count *</label>
+            <select id="bkGuests" class="form-select" required>
+              <option value="20 - 50 guests">20 - 50 guests</option>
+              <option value="50 - 100 guests" selected>50 - 100 guests</option>
+              <option value="100 - 250 guests">100 - 250 guests</option>
+              <option value="250 - 500 guests">250 - 500 guests</option>
+              <option value="500+ guests">500+ guests (Large scale)</option>
+            </select>
+          </div>
+        </div>
+
+        <div style="margin-top:20px;">
+          <label class="form-label">Estimated Production Budget Range *</label>
+          <select id="bkBudget" class="form-select" required>
+            <option value="₹2,00,000 - ₹5,00,000">₹2,00,000 - ₹5,00,000</option>
+            <option value="₹5,00,000 - ₹10,00,000" selected>₹5,00,000 - ₹10,00,000</option>
+            <option value="₹10,00,000 - ₹25,00,000">₹10,00,000 - ₹25,00,000</option>
+            <option value="₹25,00,000+">₹25,00,000+ (High-end architectural & artist booking)</option>
+          </select>
+        </div>
+
+        <div style="margin-top:20px;">
+          <label class="form-label">Event Description & Vision *</label>
+          <textarea id="bkMessage" class="form-textarea" rows="4" required placeholder="Tell us about the space, music genre preference, vibe, and any specific artist or technical requirements..."></textarea>
+        </div>
+
+        <!-- Submission Buttons -->
+        <div style="margin-top:28px; display:flex; flex-wrap:wrap; gap:16px; align-items:center;">
+          <button type="submit" id="bkSubmitBtn" class="btn-primary" style="flex:1; justify-content:center; padding:14px 28px; font-size:13px;">
+            Submit Booking Request
+          </button>
+          <button type="button" onclick="sendWhatsAppBooking()" class="btn-ghost" style="border-color:#25D366; color:#25D366; padding:14px 22px;">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12.031 6.172c-3.181 0-5.767 2.586-5.768 5.766-.001 1.298.38 2.27 1.019 3.287l-.582 2.128 2.182-.573c.978.58 1.911.928 3.145.929 3.178 0 5.767-2.587 5.768-5.766.001-3.187-2.575-5.77-5.764-5.771zm3.392 8.244c-.144.405-.837.774-1.17.824-.312.045-.634.053-1.688-.344-1.229-.464-2.036-1.748-2.096-1.831-.061-.082-.505-.672-.505-1.282 0-.609.317-.912.428-1.033.111-.122.243-.153.324-.153.082 0 .163.003.234.007.076.004.177-.029.278.212.102.243.344.838.374.899.03.061.051.132.01.213-.04.082-.06.133-.121.203-.06.072-.128.161-.183.216-.06.061-.124.128-.053.25.071.121.314.517.674.838.463.413.854.542.975.602.122.061.192.051.264-.03.071-.082.304-.355.385-.477.081-.121.163-.101.273-.06.111.04.707.333.829.394.121.061.203.091.233.142.03.05.03.293-.114.698zM12 2C6.477 2 2 6.477 2 12c0 1.89.525 3.66 1.438 5.168L2 22l4.98-1.309A9.96 9.96 0 0 0 12 22c5.523 0 10-4.477 10-10S17.523 2 12 2z"/></svg>
+            Chat on WhatsApp
+          </button>
+        </div>
+
+        <div id="bkFormError" style="display:none; margin-top:16px; padding:12px; border-radius:6px; background:rgba(255, 60, 60, 0.2); color:#ffcccc; font-size:13px; font-family:var(--font-mono);"></div>
+      </form>
+
+    </div>
+  </section>
+
+  <!-- Site Footer -->
+  <footer style="background:#050108; border-top:1px solid rgba(255,255,255,0.06); padding:48px 0 32px 0;">
+    <div class="shell" style="display:flex; flex-wrap:wrap; justify-content:space-between; gap:32px; align-items:center;">
+      <div>
+        <div style="font-family:var(--font-mono); font-size:14px; letter-spacing:0.35em; color:var(--shunya-magenta); font-weight:700; margin-bottom:6px;">SHOONYA</div>
+        <p style="font-size:13px; color:#8f889c; margin:0; line-height:1.5;">
+          From Shoonya, Everything Begins.<br>
+          Sound First, Built Not Booked.
+        </p>
+      </div>
+      <div style="display:flex; gap:20px; font-family:var(--font-mono); font-size:11px; text-transform:uppercase; letter-spacing:0.15em;">
+        <a href="/events" style="color:var(--shunya-bone); text-decoration:none;">Events</a>
+        <a href="/private-experiences" style="color:var(--shunya-magenta); text-decoration:none;">Private Experiences</a>
+        <a href="/about" style="color:var(--shunya-bone); text-decoration:none;">About</a>
+        <a href="/contact" style="color:var(--shunya-bone); text-decoration:none;">Contact</a>
+        <a href="/admin" style="color:#00ffaa; text-decoration:none;">Studio Admin ↗</a>
+      </div>
+    </div>
+    <div class="shell" style="margin-top:32px; padding-top:20px; border-top:1px solid rgba(255,255,255,0.04); display:flex; justify-content:space-between; font-family:var(--font-mono); font-size:11px; color:#686073;">
+      <span>&copy; <span id="yearSpan">2026</span> SHOONYA Experiences. All rights reserved.</span>
+      <span>Discretion · Sound · Architecture</span>
+    </div>
+  </footer>
+
+  <!-- Quick Talk Modal -->
+  <div id="quickTalkModal" class="shunya-modal-backdrop" onclick="if(event.target===this)closeQuickTalk()">
+    <div class="shunya-modal-card">
+      <button class="shunya-modal-close" onclick="closeQuickTalk()" aria-label="Close dialog">&times;</button>
+      <div style="font-family:var(--font-mono); font-size:11px; color:var(--shunya-magenta); text-transform:uppercase; letter-spacing:0.2em; margin-bottom:8px;">Let's Talk // Direct Access</div>
+      <h2 style="font-size:24px; margin:0 0 8px 0; color:#fff;">Connect with the SHUNYA Studio</h2>
+      <p style="font-size:13px; color:#b1a9bd; line-height:1.5; margin:0 0 24px 0;">Share your message or request event concierge assistance directly with our team.</p>
+
+      <form id="quickTalkForm" onsubmit="handleQuickTalkSubmit(event)">
+        <!-- Honeypot -->
+        <input type="text" name="shunya_hp" id="qtHp" style="display:none !important;" tabindex="-1" autocomplete="off" />
+        
+        <div style="margin-bottom:16px;">
+          <label style="display:block; font-family:var(--font-mono); font-size:11px; text-transform:uppercase; letter-spacing:0.1em; color:#d4cfde; margin-bottom:6px;">Your Name *</label>
+          <input type="text" id="qtName" required placeholder="Name (e.g. Guest)" style="width:100%; background:#09020e; border:1px solid rgba(175, 0, 241, 0.35); color:#fff; padding:10px 14px; border-radius:6px; font-family:var(--font-firs); font-size:13px;" />
+        </div>
+        <div style="margin-bottom:16px;">
+          <label style="display:block; font-family:var(--font-mono); font-size:11px; text-transform:uppercase; letter-spacing:0.1em; color:#d4cfde; margin-bottom:6px;">Email or Phone *</label>
+          <input type="text" id="qtContact" required placeholder="hello@example.com or +91 XXXXX XXXXX" style="width:100%; background:#09020e; border:1px solid rgba(175, 0, 241, 0.35); color:#fff; padding:10px 14px; border-radius:6px; font-family:var(--font-firs); font-size:13px;" />
+        </div>
+        <div style="margin-bottom:20px;">
+          <label style="display:block; font-family:var(--font-mono); font-size:11px; text-transform:uppercase; letter-spacing:0.1em; color:#d4cfde; margin-bottom:6px;">Message / Event Query *</label>
+          <textarea id="qtMessage" required rows="3" placeholder="Tell us about your requirements or dates..." style="width:100%; background:#09020e; border:1px solid rgba(175, 0, 241, 0.35); color:#fff; padding:10px 14px; border-radius:6px; font-family:var(--font-firs); font-size:13px;"></textarea>
+        </div>
+
+        <div style="display:flex; gap:12px; align-items:center;">
+          <button type="submit" id="qtSubmitBtn" class="btn-primary" style="flex:1;">Submit Enquiry</button>
+          <button type="button" onclick="sendQuickWhatsApp()" class="btn-ghost" style="border-color:#25D366; color:#25D366;">
+            Chat WhatsApp ↗
+          </button>
+        </div>
+        <div id="qtStatus" style="display:none; margin-top:16px; padding:10px; border-radius:6px; font-size:12px; font-family:var(--font-mono);"></div>
+      </form>
+    </div>
+  </div>
+
+  <!-- WhatsApp Floating FAB -->
+  <a href="https://wa.me/910000000000" target="_blank" rel="noopener noreferrer" class="shunya-wa-fab" title="Chat with SHUNYA on WhatsApp" aria-label="Chat with SHUNYA on WhatsApp">
+    <svg viewBox="0 0 24 24"><path d="M12.031 6.172c-3.181 0-5.767 2.586-5.768 5.766-.001 1.298.38 2.27 1.019 3.287l-.582 2.128 2.182-.573c.978.58 1.911.928 3.145.929 3.178 0 5.767-2.587 5.768-5.766.001-3.187-2.575-5.77-5.764-5.771zm3.392 8.244c-.144.405-.837.774-1.17.824-.312.045-.634.053-1.688-.344-1.229-.464-2.036-1.748-2.096-1.831-.061-.082-.505-.672-.505-1.282 0-.609.317-.912.428-1.033.111-.122.243-.153.324-.153.082 0 .163.003.234.007.076.004.177-.029.278.212.102.243.344.838.374.899.03.061.051.132.01.213-.04.082-.06.133-.121.203-.06.072-.128.161-.183.216-.06.061-.124.128-.053.25.071.121.314.517.674.838.463.413.854.542.975.602.122.061.192.051.264-.03.071-.082.304-.355.385-.477.081-.121.163-.101.273-.06.111.04.707.333.829.394.121.061.203.091.233.142.03.05.03.293-.114.698zM12 2C6.477 2 2 6.477 2 12c0 1.89.525 3.66 1.438 5.168L2 22l4.98-1.309A9.96 9.96 0 0 0 12 22c5.523 0 10-4.477 10-10S17.523 2 12 2z"/></svg>
+  </a>
+
+  <script>
+    // Experience format selection trigger
+    function selectExperience(formatName) {
+      var select = document.getElementById("bkType");
+      if (select) {
+        select.value = formatName;
+      }
+      var target = document.getElementById("bookingFormSection");
+      if (target) {
+        target.scrollIntoView({ behavior: "smooth" });
+      }
+    }
+
+    // Handle Form Submission
+    async function handleBookingSubmit(e) {
+      e.preventDefault();
+      var btn = document.getElementById("bkSubmitBtn");
+      var errBox = document.getElementById("bkFormError");
+      errBox.style.display = "none";
+
+      var hp = document.getElementById("bookingHp").value;
+      var name = document.getElementById("bkName").value.trim();
+      var phone = document.getElementById("bkPhone").value.trim();
+      var email = document.getElementById("bkEmail").value.trim();
+      var eventType = document.getElementById("bkType").value;
+      var date = document.getElementById("bkDate").value;
+      var location = document.getElementById("bkLocation").value.trim();
+      var guests = document.getElementById("bkGuests").value;
+      var budget = document.getElementById("bkBudget").value;
+      var message = document.getElementById("bkMessage").value.trim();
+
+      btn.disabled = true;
+      btn.innerText = "Submitting Booking Request...";
+
+      try {
+        var res = await fetch("/api/contact/send", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            route: "privateBookings",
+            name: name,
+            phone: phone,
+            email: email,
+            eventType: eventType,
+            dateCity: (date ? date + ", " : "") + location,
+            guests: guests,
+            budgetRange: budget,
+            message: message,
+            shunya_hp: hp
+          })
+        });
+
+        var r = await res.json();
+        if (r.ok) {
+          var enquiryId = r.enquiryId || "ENQ-" + Math.floor(100000 + Math.random() * 900000);
+          var targetEmail = r.targetEmail || "bookings@shunya.example";
+
+          document.getElementById("privateBookingForm").style.display = "none";
+          var successBox = document.getElementById("bookingSuccessBox");
+          successBox.style.display = "block";
+
+          document.getElementById("bookingSuccessMsg").innerHTML = `
+            Thank you, <strong>${name}</strong>. Your request for <strong>${eventType}</strong> (Ref: <code>${enquiryId}</code>) has been submitted and dispatched to our private concierge at <strong>${targetEmail}</strong>.<br>We will review your date (${date || "TBA"}) and specifications and contact you directly.
+          `;
+
+          var waNum = (window.SHUNYA_DATA && window.SHUNYA_DATA.brand && window.SHUNYA_DATA.brand.whatsapp) || "910000000000";
+          var waText = encodeURIComponent(`Hi SHUNYA! I just submitted private booking request #${enquiryId} for ${eventType} on ${date || "Date TBA"} in ${location}.`);
+          document.getElementById("successWaBtn").href = "https://wa.me/" + waNum + "?text=" + waText;
+
+          successBox.scrollIntoView({ behavior: "smooth" });
+        } else {
+          throw new Error(r.error || "Submission failed");
+        }
+      } catch(err) {
+        errBox.style.display = "block";
+        errBox.innerText = "Booking submission failed: " + err.message;
+      } finally {
+        btn.disabled = false;
+        btn.innerText = "Submit Booking Request";
+      }
+    }
+
+    function resetBookingForm() {
+      document.getElementById("privateBookingForm").reset();
+      document.getElementById("privateBookingForm").style.display = "block";
+      document.getElementById("bookingSuccessBox").style.display = "none";
+    }
+
+    // Dynamic WhatsApp Pre-fill with user input
+    function sendWhatsAppBooking() {
+      var name = document.getElementById("bkName").value.trim() || "Host";
+      var eventType = document.getElementById("bkType").value || "Private Experience";
+      var date = document.getElementById("bkDate").value || "Date TBA";
+      var location = document.getElementById("bkLocation").value.trim() || "Location TBA";
+      var guests = document.getElementById("bkGuests").value || "50-100 guests";
+      var notes = document.getElementById("bkMessage").value.trim();
+
+      var msg = `Hi SHUNYA! I'm interested in booking a ${eventType}.\n- Host: ${name}\n- Date: ${date}\n- Location: ${location}\n- Guest Count: ${guests}`;
+      if (notes) msg += `\n- Details: ${notes}`;
+
+      var waNum = (window.SHUNYA_DATA && window.SHUNYA_DATA.brand && window.SHUNYA_DATA.brand.whatsapp) || "910000000000";
+      window.open("https://wa.me/" + waNum + "?text=" + encodeURIComponent(msg), "_blank");
+    }
+
+    // Scroll progress handler
+    window.addEventListener("scroll", function() {
+      var total = document.documentElement.scrollHeight - window.innerHeight;
+      var pct = total > 0 ? (window.scrollY / total) * 100 : 0;
+      var bar = document.getElementById("shunyaScrollProgress");
+      if (bar) bar.style.width = pct + "%";
+    }, { passive: true });
+
+    // Mobile nav toggle
+    function toggleMobileNav() {
+      var d = document.getElementById("mobileDrawer");
+      d.style.display = (d.style.display === "flex") ? "none" : "flex";
+    }
+
+    // Quick Talk modal
+    function openQuickTalk() {
+      document.getElementById("quickTalkModal").style.display = "flex";
+    }
+    function closeQuickTalk() {
+      document.getElementById("quickTalkModal").style.display = "none";
+    }
+    document.addEventListener("keydown", function(e) { if (e.key === "Escape") closeQuickTalk(); });
+
+    async function handleQuickTalkSubmit(e) {
+      e.preventDefault();
+      var btn = document.getElementById("qtSubmitBtn");
+      var status = document.getElementById("qtStatus");
+      var name = document.getElementById("qtName").value.trim();
+      var contact = document.getElementById("qtContact").value.trim();
+      var message = document.getElementById("qtMessage").value.trim();
+      var hp = document.getElementById("qtHp").value;
+
+      btn.disabled = true;
+      status.style.display = "block";
+      status.style.background = "rgba(175, 0, 241, 0.2)";
+      status.style.color = "#ecd2ff";
+      status.innerText = "Submitting your message...";
+
+      try {
+        var res = await fetch("/api/enquiries", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            name: name,
+            email: contact.includes("@") ? contact : "",
+            phone: !contact.includes("@") ? contact : "",
+            intent: "Quick Talk (Private Experiences)",
+            message: message,
+            shunya_hp: hp
+          })
+        });
+        var r = await res.json();
+        if (r.ok) {
+          status.style.background = "rgba(0, 255, 170, 0.15)";
+          status.style.color = "#aaffdf";
+          status.innerText = "Thank you! Your message (" + (r.enquiry ? r.enquiry.id : "ENQ-OK") + ") has been received. The team will connect with you shortly.";
+          document.getElementById("quickTalkForm").reset();
+        } else {
+          throw new Error(r.error || "Submission failed");
+        }
+      } catch(err) {
+        status.style.background = "rgba(255, 60, 60, 0.2)";
+        status.style.color = "#ffcccc";
+        status.innerText = "Notice: " + err.message;
+      } finally {
+        btn.disabled = false;
+      }
+    }
+
+    function sendQuickWhatsApp() {
+      var name = document.getElementById("qtName").value.trim() || "Guest";
+      var msg = document.getElementById("qtMessage").value.trim() || "I would like to speak with the SHUNYA studio.";
+      var waNum = (window.SHUNYA_DATA && window.SHUNYA_DATA.brand && window.SHUNYA_DATA.brand.whatsapp) || "910000000000";
+      var url = "https://wa.me/" + waNum + "?text=" + encodeURIComponent("Hi SHUNYA! I'm " + name + ". " + msg);
+      window.open(url, "_blank");
+    }
+
+    // Audio synthesizer
+    var audioCtx = null, isAudio = false, oscNodes = [], gainNode = null;
+    function shunyaToggleAudio() {
+      var dot = document.getElementById("shunyaSoundDot");
+      var lbl = document.getElementById("shunyaSoundLabel");
+      if (!isAudio) {
+        try {
+          var AudioContext = window.AudioContext || window.webkitAudioContext;
+          if (!audioCtx) audioCtx = new AudioContext();
+          if (audioCtx.state === "suspended") audioCtx.resume();
+          gainNode = audioCtx.createGain();
+          gainNode.gain.setValueAtTime(0.01, audioCtx.currentTime);
+          gainNode.gain.exponentialRampToValueAtTime(0.12, audioCtx.currentTime + 3);
+          var filter = audioCtx.createBiquadFilter();
+          filter.type = "lowpass"; filter.frequency.setValueAtTime(280, audioCtx.currentTime);
+          var sub = audioCtx.createOscillator(); sub.type = "sine"; sub.frequency.setValueAtTime(54, audioCtx.currentTime);
+          sub.connect(filter); sub.start();
+          var drone = audioCtx.createOscillator(); drone.type = "triangle"; drone.frequency.setValueAtTime(108, audioCtx.currentTime);
+          drone.connect(filter); drone.start();
+          filter.connect(gainNode); gainNode.connect(audioCtx.destination);
+          oscNodes = [sub, drone]; isAudio = true;
+          dot.style.background = "#00ffaa"; dot.style.boxShadow = "0 0 10px #00ffaa";
+          lbl.innerText = "Audio: LIVE ●";
+        } catch(e){}
+      } else {
+        if (gainNode && audioCtx) {
+          gainNode.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.8);
+          setTimeout(() => { oscNodes.forEach(o => { try{o.stop(); o.disconnect();}catch(e){} }); oscNodes = []; }, 800);
+        }
+        isAudio = false; dot.style.background = "#888"; dot.style.boxShadow = "none"; lbl.innerText = "Audio: OFF";
+      }
+    }
+
+    document.addEventListener("DOMContentLoaded", function() {
+      var waNum = (window.SHUNYA_DATA && window.SHUNYA_DATA.brand && window.SHUNYA_DATA.brand.whatsapp) || "910000000000";
+      var fab = document.querySelector(".shunya-wa-fab");
+      if (fab) fab.href = "https://wa.me/" + waNum + "?text=" + encodeURIComponent("Hi SHUNYA — I'd like to enquire about your private experiences.");
+      var yr = document.getElementById("yearSpan");
+      if (yr) yr.innerText = new Date().getFullYear();
+    });
+  </script>
+
+  <style>
+    @media (min-width: 768px) {
+      .md-nav { display: flex !important; }
+      .md-hidden { display: none !important; }
+      .form-2col { grid-template-columns: 1fr 1fr !important; }
+      .form-3col { grid-template-columns: 1fr 1fr 1fr !important; }
+    }
+  </style>
+
+</body>
+</html>

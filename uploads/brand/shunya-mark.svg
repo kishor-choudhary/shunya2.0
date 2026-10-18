@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64" role="img" aria-label="SHUNYA">
+  <rect width="64" height="64" fill="#06080d"/>
+  <g transform="translate(12.62 12.62) scale(0.775)">
+    <path
+      d="M44.8 15.4C35.8 6.4 12.9 12.6 17.7 20.6s21.9 11.6 28.6 22.8c4.8 8-18.1 14.2-27.1 5.2"
+      fill="none"
+      stroke="#f3f4f6"
+      stroke-width="9"
+      stroke-linecap="round"
+    />
+  </g>
+</svg>

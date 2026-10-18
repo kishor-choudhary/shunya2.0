@@ -1,0 +1,396 @@
+{
+  "version": 1,
+  "adminPassword": "shunya2026",
+  "brand": {
+    "name": "SHOONYA",
+    "legalName": "SHOONYA Event & Music Experiences",
+    "tagline": "From Shoonya, Everything Begins.",
+    "kicker": "Independent event & electronic music experiences brand",
+    "contactEmail": "hello@shunya.example",
+    "contactPhone": "+91 XXXXX XXXXX",
+    "whatsapp": "910000000000",
+    "instagram": "https://instagram.com/shunya.example",
+    "location": "From Shoonya, Everything Begins \u00b7 India \u00b7 Worldwide",
+    "updatedAt": "2026-10-18T12:40:00.000Z",
+    "contactRouting": {
+      "privateBookings": "bookings@shunya.example",
+      "artistCollaborations": "artists@shunya.example",
+      "brandPartnerships": "partnerships@shunya.example",
+      "sponsorships": "sponsors@shunya.example",
+      "general": "hello@shunya.example"
+    }
+  },
+  "hero": {
+    "headlinePrefix": "From Shoonya, ",
+    "headlineHighlight": "Everything Begins",
+    "kicker": "Independent event & electronic music experiences brand",
+    "categories": [
+      "Electronic Music",
+      "Private Events",
+      "Stage Production",
+      "Underground Culture"
+    ],
+    "statementLeft": [
+      "Sound First,",
+      "Built Not Booked"
+    ],
+    "statementRight": [
+      "Unforgettable",
+      "Atmospheres"
+    ],
+    "disciplines": [
+      "Warehouse Series",
+      "Open Air Festivals",
+      "Private Sundowners",
+      "Exclusive Celebrations",
+      "Stage & Light Production",
+      "Curated Electronic Music"
+    ]
+  },
+  "arches": {
+    "left": "/uploads/left.jpg",
+    "right": "/uploads/right.jpg",
+    "framesPath": "/uploads/frames/ezgif-frame-",
+    "framesCount": 50
+  },
+  "events": [
+    {
+      "id": "shunya-01",
+      "slug": "shunya-01-tba",
+      "title": "SHUNYA 01 \u2014 TBA",
+      "subtitle": "Warehouse Series / Opening Edition",
+      "category": "Warehouse Series",
+      "status": "published",
+      "featured": true,
+      "date": "2026-11-06T14:30:00.000Z",
+      "dateLabel": "November 6, 2026 \u00b7 14:30 IST",
+      "venue": "Secret Warehouse Venue",
+      "city": "Mumbai",
+      "poster": "/uploads/left.jpg",
+      "ticketPrice": "\u20b91,500 onwards",
+      "ticketUrl": "https://insider.in/example-shunya-01",
+      "lineup": "Headline (TBA) \u00b7 Support (TBA) \u00b7 Opening (TBA)",
+      "lineupDetails": [
+        {
+          "name": "Headline Artist (TBA)",
+          "role": "Headline",
+          "time": "22:00 - Late"
+        },
+        {
+          "name": "Support DJ (TBA)",
+          "role": "Support",
+          "time": "20:00 - 22:00"
+        },
+        {
+          "name": "Opening Live Act (TBA)",
+          "role": "Opening",
+          "time": "18:30 - 20:00"
+        }
+      ],
+      "shortDescription": "Opening night of the SHUNYA Warehouse Series. A tuned system, controlled volume, and a crowd arriving with intent.",
+      "description": "Opening night of the SHUNYA Warehouse Series. Programming built around a single continuous arc \u2014 tuned sound systems, controlled volume, and full-range low end. Floor plan, lighting rig, and artist running order are designed together as one immersive piece.",
+      "faqs": [
+        {
+          "q": "What is the entry and age policy?",
+          "a": "Strictly 21+ only. Physical government-issued photo ID is required at the door. Digital copies and screenshots will not be accepted."
+        },
+        {
+          "q": "When will the exact venue address be revealed?",
+          "a": "The secret warehouse location pin will be sent via SMS and email to confirmed ticket holders 12 hours prior to doors opening."
+        },
+        {
+          "q": "Are tickets refundable or transferable?",
+          "a": "Tickets are strictly non-refundable. Transfers can only be requested through the official ticketing partner up to 48 hours before the event."
+        },
+        {
+          "q": "Is there a dancefloor or dress code etiquette?",
+          "a": "SHUNYA spaces are dancefloor-first, dark, and comfortable. Strictly no flash photography or invasive phone recording on the main floor."
+        },
+        {
+          "q": "Accessibility and special assistance",
+          "a": "Please reach out to hello@shunya.example at least 3 days in advance and our team will arrange dedicated assistance, step-free access, and safe seating."
+        }
+      ]
+    },
+    {
+      "id": "shunya-02",
+      "slug": "shunya-02-tba",
+      "title": "SHUNYA 02 \u2014 TBA",
+      "subtitle": "Open Air / Daylight into Night",
+      "category": "Open Air",
+      "status": "published",
+      "featured": true,
+      "date": "2026-12-04T14:30:00.000Z",
+      "dateLabel": "December 4, 2026 \u00b7 Sunset to Night",
+      "venue": "Outdoor Landscape Site",
+      "city": "Goa",
+      "poster": "/uploads/right.jpg",
+      "ticketPrice": "\u20b92,000 onwards",
+      "ticketUrl": "https://insider.in/example-shunya-02",
+      "lineup": "Headline (TBA) \u00b7 Ambient Support \u00b7 Visual Arts",
+      "lineupDetails": [
+        {
+          "name": "International Headline (TBA)",
+          "role": "Headline",
+          "time": "21:00 - Late"
+        },
+        {
+          "name": "Sunset Resident (TBA)",
+          "role": "Support",
+          "time": "17:30 - 21:00"
+        },
+        {
+          "name": "Ambient Acoustic Live (TBA)",
+          "role": "Opening",
+          "time": "16:00 - 17:30"
+        }
+      ],
+      "shortDescription": "Open-air session designed for scale without losing intimacy. Daylight into dusk with an outdoor acoustic arc.",
+      "description": "Open-air session designed for scale without losing intimacy. One stage, one continuous arc, and an outdoor site chosen for acoustic landscape dynamics. From golden hour daylight into the midnight void.",
+      "faqs": [
+        {
+          "q": "What time do doors open for the sunset session?",
+          "a": "Doors open at 16:00. We encourage arriving early to experience the ambient opening set as the sun sets over the landscape."
+        },
+        {
+          "q": "Are food and beverages available on site?",
+          "a": "Yes, curated food stations and a cocktail bar programme will operate throughout the event. Drinking water is free and available everywhere."
+        },
+        {
+          "q": "Is parking available at the venue?",
+          "a": "Designated valet and self-parking areas are available on site. However, we strongly recommend using rideshares or shuttle buses."
+        }
+      ]
+    }
+  ],
+  "privateExperiences": [
+    {
+      "id": "private-parties",
+      "title": "Private Parties",
+      "subtitle": "Intimate & Bespoke Sound",
+      "image": "/uploads/left.jpg",
+      "description": "Custom celebrations built as a complete night: narrative concept, tuned sound, bespoke lighting, and guest journey."
+    },
+    {
+      "id": "birthdays",
+      "title": "Birthdays",
+      "subtitle": "Milestone Celebrations",
+      "image": "/uploads/frames/ezgif-frame-005.jpg",
+      "description": "Milestone birthdays with custom DJ lineups, curated cocktail programming, and atmospheric production."
+    },
+    {
+      "id": "pool-parties",
+      "title": "Pool Parties",
+      "subtitle": "Daylight into Dusk",
+      "image": "/uploads/frames/ezgif-frame-012.jpg",
+      "description": "Sound engineered specifically for open air, water acoustics, and a crowd that stays on its feet."
+    },
+    {
+      "id": "sundowners",
+      "title": "Sundowners",
+      "subtitle": "Golden Hour Progression",
+      "image": "/uploads/right.jpg",
+      "description": "Golden-hour gatherings with a patient musical progression, considered bar flow, and sunset light design."
+    },
+    {
+      "id": "theme-parties",
+      "title": "Theme Parties",
+      "subtitle": "Art Direction & Immersive Sets",
+      "image": "/uploads/frames/ezgif-frame-025.jpg",
+      "description": "From invitation design to the final spotlight: comprehensive art direction, custom set pieces, and lighting that holds the concept."
+    },
+    {
+      "id": "exclusive-celebrations",
+      "title": "Exclusive Celebrations",
+      "subtitle": "Discretion & Confidentiality",
+      "image": "/uploads/frames/ezgif-frame-039.jpg",
+      "description": "Anniversaries, private retreats, and exclusive gatherings produced with complete non-disclosure and confidentiality."
+    }
+  ],
+  "about": {
+    "storyHeading": "An empty room is where we start.",
+    "storyBody": "From Shoonya, Everything Begins. That line is the entire philosophy. Shoonya \u2014 the void, the zero, the silent floor before the doors open \u2014 is where every SHUNYA experience originates. We are an independent event and electronic music experiences brand crafting private celebrations and large-scale electronic music gatherings. We don't just book artists; we build complete sonic and visual rooms.",
+    "pillars": [
+      {
+        "title": "Electronic Music",
+        "description": "Programming designed around a single continuous arc with tuned systems, controlled volume, and full-range low end."
+      },
+      {
+        "title": "Private Events",
+        "description": "Bespoke celebrations produced end to end with the same high-caliber production team that builds our music events."
+      },
+      {
+        "title": "Stage Production",
+        "description": "Custom architectural lighting rigs, truss engineering, laser design, and landscape acoustic tuning."
+      },
+      {
+        "title": "Underground Culture",
+        "description": "An uncompromising culture defined by sound honesty, curated lineups, and door policies that respect the dancers."
+      }
+    ],
+    "principles": [
+      {
+        "num": "01",
+        "title": "Design the room, not the flyer",
+        "body": "We start with sightlines, sound pressure, and how human bodies will naturally move. The artwork documents what happened; the room is what people carry forever."
+      },
+      {
+        "num": "02",
+        "title": "One arc, start to finish",
+        "body": "Every SHUNYA night is programmed as a singular, unified narrative. Opening sets, peaks, and final records are developed in unison with artists."
+      },
+      {
+        "num": "03",
+        "title": "Underground by standard, not by costume",
+        "body": "Underground means honest sound reproduction, thoughtful lineups, and a safe, respectful crowd. It is an engineering and ethical standard, not a trend."
+      },
+      {
+        "num": "04",
+        "title": "Private means private",
+        "body": "Private celebrations are never published, tagged, or publicized without explicit written consent. Strict discretion is paramount."
+      }
+    ],
+    "team": [
+      {
+        "name": "Creative Director (Placeholder)",
+        "role": "Direction & Concept",
+        "bio": "Curates narrative arcs and art direction across all SHUNYA events."
+      },
+      {
+        "name": "Head of Technical & Sound (Placeholder)",
+        "role": "Acoustic Engineering",
+        "bio": "Oversees system tuning, phase alignment, and loudspeaker deployment."
+      },
+      {
+        "name": "Head of Private Experiences (Placeholder)",
+        "role": "Hospitality & Curation",
+        "bio": "Directs bespoke private bookings, bar programming, and guest journeys."
+      }
+    ]
+  },
+  "gallery": [
+    {
+      "id": "frame-1792318202419",
+      "src": "/uploads/gallery/user_frame_01_frame-1792318202419.jpg",
+      "caption": "warehouse series 1",
+      "orientation": "landscape",
+      "date": "November 2026",
+      "location": "SHUNYA Venue",
+      "credit": "SHUNYA Production Archive",
+      "originalRemoteSrc": "https://i.pinimg.com/1200x/c9/bf/6e/c9bf6e6f36e34106eda0a29ad9cf7d73.jpg"
+    },
+    {
+      "id": "frame-1792318252663",
+      "src": "/uploads/gallery/user_frame_02_frame-1792318252663.jpg",
+      "caption": "warehouse series 2",
+      "orientation": "portrait",
+      "date": "November 2026",
+      "location": "SHUNYA Venue",
+      "credit": "SHUNYA Production Archive",
+      "originalRemoteSrc": "https://i.pinimg.com/736x/d0/74/79/d07479d4e2c39653444449d7d1c0d2ee.jpg"
+    },
+    {
+      "id": "frame-1792318331522",
+      "src": "/uploads/gallery/user_frame_03_frame-1792318331522.jpg",
+      "caption": "open air festival 1",
+      "orientation": "portrait",
+      "date": "November 2026",
+      "location": "SHUNYA Venue",
+      "credit": "SHUNYA Production Archive",
+      "originalRemoteSrc": "https://i.pinimg.com/736x/63/33/f0/6333f0fc9e229a1eb11547fc35c97f03.jpg"
+    },
+    {
+      "id": "frame-1792318377298",
+      "src": "/uploads/gallery/user_frame_04_frame-1792318377298.jpg",
+      "caption": "open air festival 2",
+      "orientation": "landscape",
+      "date": "November 2026",
+      "location": "SHUNYA Venue",
+      "credit": "SHUNYA Production Archive",
+      "originalRemoteSrc": "https://i.pinimg.com/1200x/63/0d/d5/630dd5fa4e416ad09e18297b10baf087.jpg"
+    },
+    {
+      "id": "frame-1792318435825",
+      "src": "/uploads/gallery/user_frame_05_frame-1792318435825.jpg",
+      "caption": "private sundowner 1",
+      "orientation": "landscape",
+      "date": "November 2026",
+      "location": "SHUNYA Venue",
+      "credit": "SHUNYA Production Archive",
+      "originalRemoteSrc": "https://i.pinimg.com/1200x/68/b8/4f/68b84f66e29f5a7d53948793b0a39bba.jpg"
+    },
+    {
+      "id": "frame-1792318485702",
+      "src": "/uploads/gallery/user_frame_06_frame-1792318485702.jpg",
+      "caption": "private sundowner 2",
+      "orientation": "landscape",
+      "date": "November 2026",
+      "location": "SHUNYA Venue",
+      "credit": "SHUNYA Production Archive",
+      "originalRemoteSrc": "https://i.pinimg.com/736x/b0/8a/c8/b08ac881d5363f5a4cdde751b27d1ab9.jpg"
+    },
+    {
+      "id": "frame-1792318547807",
+      "src": "/uploads/gallery/user_frame_07_frame-1792318547807.jpg",
+      "caption": "exclusive celebration 1",
+      "orientation": "portrait",
+      "date": "November 2026",
+      "location": "SHUNYA Venue",
+      "credit": "SHUNYA Production Archive",
+      "originalRemoteSrc": "https://i.pinimg.com/736x/9c/fe/1e/9cfe1ef7b751d810ec8e6d68e843b81b.jpg"
+    },
+    {
+      "id": "frame-1792318576043",
+      "src": "/uploads/gallery/user_frame_08_frame-1792318576043.jpg",
+      "caption": "exclusive celebration 2",
+      "orientation": "landscape",
+      "date": "November 2026",
+      "location": "SHUNYA Venue",
+      "credit": "SHUNYA Production Archive",
+      "originalRemoteSrc": "https://i.pinimg.com/1200x/d7/b1/5f/d7b15fe9e8dc76fb30254b9c6fa96a5f.jpg"
+    },
+    {
+      "id": "frame-1792318645557",
+      "src": "/uploads/gallery/user_frame_09_frame-1792318645557.jpg",
+      "caption": "stage and light production 1",
+      "orientation": "landscape",
+      "date": "November 2026",
+      "location": "SHUNYA Venue",
+      "credit": "SHUNYA Production Archive",
+      "originalRemoteSrc": "https://i.pinimg.com/1200x/b7/71/e4/b771e47b9b63c1649f34448a61080275.jpg"
+    },
+    {
+      "id": "frame-1792318678486",
+      "src": "/uploads/gallery/user_frame_10_frame-1792318678486.jpg",
+      "caption": "stage and light production 2",
+      "orientation": "landscape",
+      "date": "November 2026",
+      "location": "SHUNYA Venue",
+      "credit": "SHUNYA Production Archive",
+      "originalRemoteSrc": "https://i.pinimg.com/1200x/cb/ac/0e/cbac0e3e12fe6101d176a50dbea93dd8.jpg"
+    },
+    {
+      "id": "frame-1792318749865",
+      "src": "/uploads/gallery/user_frame_11_frame-1792318749865.jpg",
+      "caption": "curated electronic music 1",
+      "orientation": "landscape",
+      "date": "November 2026",
+      "location": "SHUNYA Venue",
+      "credit": "SHUNYA Production Archive",
+      "originalRemoteSrc": "https://i.pinimg.com/1200x/35/2c/b5/352cb51ea04e8fdbe887ce298d1a2aec.jpg"
+    },
+    {
+      "id": "frame-1792318844766",
+      "src": "/uploads/gallery/user_frame_12_frame-1792318844766.jpg",
+      "caption": "curated electronic music 2",
+      "orientation": "landscape",
+      "date": "November 2026",
+      "location": "SHUNYA Venue",
+      "credit": "SHUNYA Production Archive",
+      "originalRemoteSrc": "https://i.pinimg.com/736x/96/4b/00/964b00364dc9df3543573cc3d9b6e4a8.jpg"
+    }
+  ],
+  "enquiries": [],
+  "theme": "void",
+  "updatedAt": "2026-10-18T10:21:42.258Z"
+}
