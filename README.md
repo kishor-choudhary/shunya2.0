@@ -102,3 +102,19 @@ Built with a dark cinematic aesthetic, brutalist neon typography, and fluid mult
 │       └── chunks/16da4...js    # Three.js WebGL ProjectGallery3D mesh
 │
 └── public/ / images/            # Static brand assets, icons & culture fallbacks
+## Deployment asset compatibility
+
+Keep deployment assets as regular files and directories, not symbolic links.
+`uploads/frames/` contains the 50 image-sequence frames, and `uploads/left.jpg`
+and `uploads/right.jpg` are regular images. This preserves the existing public
+URLs without requiring the deployment packager to resolve symlinks (which can
+cause a Vercel `BUILD_FAILED: File ... does not exist` error).
+
+Run the deployment asset regression checks with:
+
+```sh
+node --test tests/deployment-assets.test.js
+```
+
+After publishing these changes to your connected Git branch, deploy that revision
+in Vercel. A redeploy of the old revision will still contain the symlinks.
